@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel - Academic Atelier</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dashboard-body">
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="icone-logo-pequeno">
+                <!-- SVG logo em escala reduzida, mesma cor, mas agora com a caixa preenchida -->
+                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000"
+                    preserveAspectRatio="xMidYMid meet">
+                    <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#fff" stroke="none">
+                        <path
+                            d="M2450 4251 c-447 -183 -2060 -865 -2080 -879 -14 -11 -32 -38 -40 -60 -13 -37 -13 -47 0 -84 8 -22 26 -49 40 -60 14 -10 500 -219 1080 -464 797 -337 1067 -447 1105 -451 47 -4 97 16 898 355 l847 359 0 -527 0 -528 -30 -12 c-108 -45 -174 -261 -121 -399 l18 -49 -58 -263 c-33 -144 -59 -273 -59 -286 0 -29 42 -73 69 -73 11 0 52 17 92 37 62 33 83 38 151 42 83 3 144 -12 200 -51 14 -10 40 -21 57 -24 25 -5 36 -1 61 24 16 17 30 37 30 45 0 8 -34 136 -76 283 l-76 268 16 46 c10 27 16 76 16 122 0 102 -28 178 -86 237 l-44 44 0 566 0 566 140 59 c148 62 182 87 195 146 10 44 -3 86 -34 118 -27 26 -137 73 -1844 794 -180 76 -338 138 -350 138 -12 0 -65 -18 -117 -39z" />
+                        <path
+                            d="M1202 2208 c3 -411 4 -424 25 -463 29 -54 62 -83 168 -150 244 -154 545 -263 855 -312 157 -24 461 -24 620 1 249 39 479 110 690 216 229 114 306 171 346 255 l24 50 0 414 c0 389 -1 413 -17 408 -10 -2 -297 -123 -638 -268 l-620 -264 -90 0 -90 0 -629 268 c-346 147 -633 267 -638 267 -5 0 -8 -184 -6 -422z" />
+                    </g>
+                </svg>
+            </div>
+            <div class="sidebar-logo-text">
+                <h2>The Atelier</h2>
+                <p>EDUCAÇÃO ESPECIALIZADA</p>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item ativo">
+                <span class="nav-icon">⊞</span> Painel Principal
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">🎓</span> Turmas
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">👥</span> Alunos
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">📖</span> Planos de Aula
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="login.html" class="nav-item logout">
+                <span class="nav-icon">↪</span> Sair
+            </a>
+        </div>
+    </aside>
+
+    <main class="dashboard-main">
+        <header class="dashboard-header">
+            <div class="user-info">
+                <!-- Avatar provisório, gera iniciais sozinho via API, legal para protótipos -->
+                <img src="https://ui-avatars.com/api/?name=Marcos&background=00509d&color=fff&size=80"
+                    alt="Foto do perfil" class="avatar">
+                <span class="user-greeting">Olá, Professor Marcos</span>
+            </div>
+            <div class="header-actions">
+                <button class="icon-button notification-btn"><span class="badge"></span>🔔</button>
+                <button class="icon-button">?</button>
+            </div>
+        </header>
+
+        <!-- CARTÕES DO TOPO -->
+        <section class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-title">Total de alunos</span>
+                    <div class="metric-icon green-bg">👥</div>
+                </div>
+                <h3 class="metric-value">x</h3>
+            </div>
+
+            <div class="metric-card border-bottom-blue">
+                <div class="metric-header">
+                    <span class="metric-title">Total de turmas</span>
+                    <div class="metric-icon blue-bg">📘</div>
+                </div>
+                <h3 class="metric-value">x</h3>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-title">Média geral da escola</span>
+                    <div class="metric-icon lightblue-bg">📈</div>
+                </div>
+                <h3 class="metric-value">x</h3>
+            </div>
+
+            <div class="metric-card danger-card">
+                <div class="metric-header">
+                    <span class="metric-title">Alunos em risco</span>
+                    <div class="metric-icon red-bg">⚠️</div>
+                </div>
+                <h3 class="metric-value text-red">42</h3>
+            </div>
+        </section>
+
+        <!-- GRÁFICOS (ESPAÇOS EM BRANCO RESERVADOS CONFORME SOLICITADO) -->
+        <section class="charts-row">
+            <div class="chart-card">
+                <div class="chart-header-flex">
+                    <div>
+                        <h3>Performance por Turma</h3>
+                        <p>Média de notas do último bimestre</p>
+                    </div>
+                    <button class="btn-primary">Ver todas as turmas</button>
+                </div>
+                <div class="chart-placeholder">
+                    <!-- Base para adicionar o gráfico no futuro -->
+                    <div class="chart-labels-bottom">
+                        <span>7º A</span><span>7º B</span><span>8º A</span><span>9º C</span><span>EM 1º</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <h3>Frequência Geral</h3>
+                <p>Presença consolidada</p>
+
+                <div class="circular-chart-placeholder">
+                    <!-- Mock de um anel contornando o valor central usando bordas -->
+                    <div class="circle-chart">
+                        <div class="circle-value">
+                            <h2>x</h2>
+                            <span>PRESENTES</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-legend">
+                    <span class="legend-item"><span class="dot blue-dot"></span> Presença</span>
+                    <span class="legend-item"><span class="dot gray-dot"></span> Faltas</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- TABELA INFERIOR -->
+        <section class="table-section">
+            <div class="table-header-custom">
+                <h3>Semáforo de Desempenho</h3>
+                <div class="status-legend">
+                    <span class="legend-item"><span class="dot green-dot"></span> Estável</span>
+                    <span class="legend-item"><span class="dot yellow-dot"></span> Atenção</span>
+                    <span class="legend-item"><span class="dot red-dot"></span> Crítico</span>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ESTUDANTE</th>
+                            <th>STATUS</th>
+                            <th>TURMA</th>
+                            <th>MÉDIA ATUAL</th>
+                            <th>AÇÃO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="student-info">
+                                    <span class="initials bg-light-blue text-dark-blue">AM</span>
+                                    <span class="student-name">Ana Maria Oliveira</span>
+                                </div>
+                            </td>
+                            <td><span class="dot green-dot"></span></td>
+                            <td>9º Ano C</td>
+                            <td><strong>9.5</strong></td>
+                            <td><button class="btn-icon">👁</button></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="student-info">
+                                    <span class="initials bg-light-gray text-dark-gray">JS</span>
+                                    <span class="student-name">João Silva Santos</span>
+                                </div>
+                            </td>
+                            <td><span class="dot yellow-dot"></span></td>
+                            <td>8º Ano A</td>
+                            <td><strong>6.8</strong></td>
+                            <td><button class="btn-icon">👁</button></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="student-info">
+                                    <span class="initials bg-light-blue text-dark-blue">RC</span>
+                                    <span class="student-name">Ricardo Carvalho</span>
+                                </div>
+                            </td>
+                            <td><span class="dot red-dot"></span></td>
+                            <td>EM 1º Ano</td>
+                            <td><strong>4.2</strong></td>
+                            <td><button class="btn-icon">👁</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Botão de Ação Rápida Flutuante -->
+    <button class="fab-btn">+</button>
+</body>
+
+</html>
