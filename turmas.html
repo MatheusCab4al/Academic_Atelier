@@ -28,6 +28,12 @@
                 <h2>The Atelier</h2>
                 <p>EDUCAÇÃO ESPECIALIZADA</p>
             </div>
+            <!-- Botão hambúrguer para mobile -->
+            <button class="hamburger-btn" aria-label="Abrir ou fechar menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
 
         <!-- Navegação: "Turmas" marcado como ativo nesta página -->
@@ -149,6 +155,18 @@
     </div>
 
     <script>
+        // ===== MENU HAMBÚRGUER (MOBILE) =====
+        const btnHamburger = document.querySelector('.hamburger-btn');
+        const navMenu = document.querySelector('.sidebar-nav');
+        const footerMenu = document.querySelector('.sidebar-footer');
+
+        // Ao clicar, alterna as classes que abrem/fecham o menu
+        btnHamburger.addEventListener('click', () => {
+            btnHamburger.classList.toggle('active');
+            navMenu.classList.toggle('open');
+            footerMenu.classList.toggle('open');
+        });
+
         // ===== ARMAZENAMENTO EM MEMÓRIA (array, nada de banco) =====
         // Cada turma é um objeto com: nome, serie, turno, anoLetivo
         const listaTurmas = [

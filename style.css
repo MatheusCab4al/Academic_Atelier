@@ -1211,12 +1211,13 @@ tr:last-child td {
 
 /* --- INÍCIO: REGRAS DE RESPONSIVIDADE (Telas Menores) --- */
 @media (max-width: 768px) {
-    /* Muda a direção do layout principal para coluna (um embaixo do outro) */
+
+    /* Muda o layout principal para coluna (sidebar em cima, conteúdo embaixo) */
     .dashboard-body {
         flex-direction: column;
     }
 
-    /* Faz a barra lateral ocupar 100% da largura na tela do celular */
+    /* Sidebar ocupa 100% da largura no mobile */
     .sidebar {
         width: 100%;
         border-right: none;
@@ -1224,33 +1225,33 @@ tr:last-child td {
         padding: 24px 0;
     }
 
-    /* Mostra o botão hambúrguer no celular */
+    /* Mostra o botão hambúrguer no mobile */
     .hamburger-btn {
         display: flex;
     }
 
-    /* Distribui logo e botão de menu para lados opostos com espaço no meio */
+    /* Logo e hambúrguer ficam nos lados opostos */
     .sidebar-logo {
         justify-content: space-between;
-        margin-bottom: 0; /* Remove a margem por padrão, só tem quando aberto o menu */
+        margin-bottom: 0;
         padding: 0 24px;
     }
 
-    /* O menu começa oculto no celular (js vai ativar) */
+    /* Menu começa escondido, só aparece quando .open é adicionado */
     .sidebar-nav {
         display: none;
-        margin-top: 24px; /* Compensa a margem tirada do logo */
+        margin-top: 24px;
         grid-template-columns: repeat(2, 1fr);
         gap: 8px;
         padding: 0 16px;
     }
-    
-    /* Quando o botão é ativado e a classe entra em cena, vira grid */
+
+    /* Quando o hambúrguer é clicado, o JS adiciona .open e o menu aparece */
     .sidebar-nav.open {
         display: grid;
     }
 
-    /* Ajusta os botões do menu nas bordas */
+    /* Remove a margem lateral dos itens para caber na grade */
     .nav-item {
         margin-right: 0;
         border-radius: 8px;
@@ -1258,37 +1259,40 @@ tr:last-child td {
         padding: 12px 16px;
     }
 
-    /* A opção de sair começa escondida */
+    /* Rodapé da sidebar começa escondido também */
     .sidebar-footer {
         display: none;
         margin-top: 16px;
+        padding: 0 16px;
     }
-    
-    /* Exibe se o menu estiver marcado como aberto .open */
+
+    /* Aparece junto com o menu quando .open é ativado */
     .sidebar-footer.open {
         display: block;
     }
 
-    /* Reduz as margens gerais da área central de trabalho */
+    /* Reduz o padding geral do conteúdo principal */
     .dashboard-main {
         padding: 16px;
         gap: 24px;
     }
 
-    /* Permite quebra de linha do cabeçalho de usuário se a tela encolher muito */
+    /* Cabeçalho permite quebra de linha */
     .dashboard-header {
         flex-wrap: wrap;
         gap: 16px;
         justify-content: space-between;
     }
 
-    /* Mostra duas métricas por linha para tablets ou visões medianas */
+    /* === RESPONSIVIDADE DO DASHBOARD === */
+
+    /* Duas métricas por linha em tablets */
     .metrics-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
     }
 
-    /* Coloca os gráficos em formato lista (um embaixo do outro) */
+    /* Gráficos empilhados */
     .charts-row {
         flex-direction: column;
         gap: 16px;
@@ -1298,42 +1302,42 @@ tr:last-child td {
         width: 100%;
     }
 
-    /* Permite botão de detalhes do gráfico empilhar se faltar espaço */
+    /* Botão do gráfico empilha embaixo do título */
     .chart-header-flex {
         flex-direction: column;
         gap: 16px;
         align-items: stretch;
     }
 
-    /* Ajusta a margem do botão para preencher horizontalmente */
     .chart-header-flex .btn-primary {
         margin-left: 0;
         text-align: center;
     }
 
-    /* Adiciona barra de rolagem horizontal onde a tabela transborda na tela */
+    /* Tabela com rolagem horizontal */
     .table-container {
         overflow-x: auto;
     }
 
-    /* Trava largura mínima da tabela para suas células não achatarem demais os textos */
     table {
         min-width: 600px;
     }
 
-    /* Reaproxima o botão de ações flutuante para as bordas do celular */
+    /* Botão flutuante mais perto da borda */
     .fab-btn {
         bottom: 16px;
         right: 16px;
     }
 
-    /* Título e botão da página de turmas empilham */
+    /* === RESPONSIVIDADE DA PÁGINA DE TURMAS === */
+
+    /* Título e botão empilham verticalmente */
     .titulo-pagina {
         flex-direction: column;
         align-items: flex-start;
     }
 
-    /* Botão Nova Turma ocupa a largura toda */
+    /* Botão Nova Turma ocupa toda a largura */
     .btn-nova-turma {
         width: 100%;
         justify-content: center;
@@ -1344,28 +1348,52 @@ tr:last-child td {
         grid-template-columns: 1fr;
     }
 
-    /* Barra de pesquisa ocupa tudo */
+    /* Barra de pesquisa ocupa toda a largura */
     .barra-pesquisa {
         max-width: 100%;
     }
 
-    /* Modal se adapta às bordas do celular */
+    /* Modal se ajusta às bordas da tela */
     .modal-container {
         margin: 16px;
         padding: 24px;
     }
+
+    /* Campos duplos do modal empilham no celular */
+    .input-linha-dupla {
+        flex-direction: column;
+        gap: 12px;
+    }
 }
 
-/* Telas menores de celulares de pé (Portrait) */
+/* Telas bem pequenas (celulares em pé) */
 @media (max-width: 480px) {
-    /* Exibe apenas uma única métrica por linha para encaixar melhor */
+
+    /* Uma métrica por linha */
     .metrics-grid {
         grid-template-columns: 1fr;
     }
 
-    /* Força os botões do menu de navegação a ficarem um abaixo do outro com largura máxima */
+    /* Menu da sidebar em coluna única */
     .sidebar-nav {
         grid-template-columns: 1fr;
+    }
+
+    /* Título da página de turmas menor */
+    .titulo-pagina h1 {
+        font-size: 22px;
+    }
+
+    /* Rodapé do cartão empilha os botões */
+    .cartao-turma-rodape {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    /* Botão editar ocupa largura total */
+    .cartao-turma-rodape .btn-editar {
+        width: 100%;
+        text-align: center;
     }
 }
 /* --- FIM: REGRAS DE RESPONSIVIDADE --- */
