@@ -310,6 +310,41 @@ body {
     padding: 12px 16px;
 }
 
+/* HAMBURGUER MENU (MOBILE) */
+.hamburger-btn {
+    display: none; /* Oculto em telas grandes (Desktop) */
+    flex-direction: column;
+    gap: 5px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 10;
+    outline: none;
+}
+
+/* Os três traços do botão de menu */
+.hamburger-btn span {
+    width: 24px;
+    height: 3px;
+    background: #00509d;
+    border-radius: 2px;
+    transition: 0.3s; /* Anima o risco visual suavemente */
+}
+
+/* Quando o botão recebe('.active'), ele vira um 'X' */
+.hamburger-btn.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-btn.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
 /* MAIN CONTENT */
 .dashboard-main {
     flex-grow: 1;
@@ -390,14 +425,14 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
 }
 
-.border-bottom-blue {
+.borda-inferior-azul {
     border-bottom: 4px solid #00509d;
     padding-bottom: 20px;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
 }
 
-.danger-card {
+.cartao-perigo {
     background: #fff5f5;
 }
 
@@ -424,23 +459,27 @@ body {
     font-size: 16px;
 }
 
-.green-bg {
+.fundo-verde {
     background: #e6fffa;
     color: #234e45;
 }
 
-.blue-bg {
+.fundo-azul {
     background: #00509d;
     color: #fff;
 }
 
-.lightblue-bg {
+.fundo-azul-claro {
     background: #eef4ff;
     color: #00509d;
 }
 
-.red-bg {
+.fundo-vermelho {
     background: #ffe3e3;
+    color: #c53030;
+}
+
+.texto-vermelho {
     color: #c53030;
 }
 
@@ -571,7 +610,7 @@ body {
     letter-spacing: 0.5px;
 }
 
-.chart-legend {
+.legenda-grafico {
     display: flex;
     justify-content: center;
     gap: 24px;
@@ -600,12 +639,12 @@ body {
     color: #1a1c23;
 }
 
-.status-legend {
+.legenda-status {
     display: flex;
     gap: 16px;
 }
 
-.legend-item {
+.item-legenda {
     font-size: 12px;
     color: #4a5568;
     display: flex;
@@ -613,30 +652,30 @@ body {
     gap: 6px;
 }
 
-.dot {
+.ponto {
     width: 8px;
     height: 8px;
     border-radius: 50%;
     display: inline-block;
 }
 
-.green-dot {
+.ponto-verde {
     background: #38a169;
 }
 
-.yellow-dot {
+.ponto-amarelo {
     background: #ecc94b;
 }
 
-.red-dot {
+.ponto-vermelho {
     background: #e53e3e;
 }
 
-.blue-dot {
+.ponto-azul {
     background: #00509d;
 }
 
-.gray-dot {
+.ponto-cinza {
     background: #e2e8f0;
 }
 
@@ -683,13 +722,13 @@ tr:last-child td {
     border-bottom: none;
 }
 
-.student-info {
+.info-aluno {
     display: flex;
     align-items: center;
     gap: 16px;
 }
 
-.initials {
+.iniciais-nome {
     width: 36px;
     height: 36px;
     border-radius: 8px;
@@ -700,23 +739,23 @@ tr:last-child td {
     font-weight: 700;
 }
 
-.bg-light-blue {
+.fundo-azul-claro {
     background: #eef4ff;
 }
 
-.text-dark-blue {
+.texto-azul-escuro {
     color: #00509d;
 }
 
-.bg-light-gray {
+.fundo-cinza-claro {
     background: #f7fafc;
 }
 
-.text-dark-gray {
+.texto-cinza-escuro {
     color: #4a5568;
 }
 
-.student-name {
+.nome-aluno {
     font-weight: 700;
     color: #1a1c23;
 }
@@ -753,3 +792,580 @@ tr:last-child td {
 .fab-btn:hover {
     transform: scale(1.05);
 }
+
+/* --- ESTILOS DO MODAL (CRIAR TURMA) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(21, 25, 32, 0.4);
+    backdrop-filter: blur(3px); /* Fundo embaçadinho em pt-br */
+    display: none; /* Só mostra quando for ativado pelo celular */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-overlay.ativo {
+    display: flex;
+}
+
+.modal-container {
+    background: #fff;
+    width: 100%;
+    max-width: 440px;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    animation: deslizaModal 0.3s ease;
+}
+
+/* Anima a transição da gaveta para ficar agradável */
+@keyframes deslizaModal {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.modal-header h2 {
+    font-size: 18px;
+    font-weight: 800;
+    color: #1a1c23;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+}
+
+.modal-header p {
+    font-size: 12px;
+    color: #718096;
+    font-weight: 500;
+}
+
+.fechar-modal {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: #718096;
+    cursor: pointer;
+    line-height: 1;
+    transition: 0.2s;
+    padding: 4px; /* Aumenta a zona para tocar com os dedos */
+}
+
+.fechar-modal:hover {
+    color: #c53030; /* Fica avermelhado ao passar o cursor */
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}    
+
+/* Garante que os containers internos não possuam espaços além do devido */
+.class-margin-0 {
+    margin-bottom: 0 !important;
+}
+
+/* Ajustes no select dropdown nativo para encaixar no padrão de cor premium */
+.modal-form select {
+    padding: 14px 16px;
+    background-color: #eef2f6; 
+    border: 1px solid #eef2f6;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    width: 100%;
+    appearance: none; /* Desliga a setinha feia nativa do windows/mac */
+    cursor: pointer;
+    font-weight: 500;
+    /* Imagem base64 pura para injetar uma estinha sob medida */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='%23718096' d='M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6l-6-6l1.41-1.41z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+}
+
+.modal-form select:focus {
+    border-color: #00509d;
+    background-color: #fff;
+}
+
+.input-linha-dupla {
+    display: flex;
+    gap: 16px;
+}
+
+.input-linha-dupla .grupo-input {
+    flex: 1; /* Ocupam ambos a mesma fatia dos lados */
+}
+
+.input-com-icone {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-com-icone input {
+    width: 100%;
+}
+
+.icone-calendario {
+    position: absolute;
+    right: 14px;
+    color: #718096;
+    font-size: 18px;
+    display: flex;
+    pointer-events: none; /* Para não bloquear cliques passando no ícone */
+}
+
+/* Rodapé final dos botões de aprovar/negar a turma*/
+.modal-rodape {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.btn-secundario {
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    color: #4a5568;
+    cursor: pointer;
+    padding: 10px 16px;
+}
+
+.btn-secundario:hover {
+    color: #1a1c23;
+}
+
+.botao-primario {
+    background: #00509d;
+    color: #fff;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.botao-primario:hover {
+    background: #003b75;
+}
+
+/* --- ESTILOS DA PÁGINA DE TURMAS --- */
+
+/* Barra de pesquisa no topo */
+.barra-pesquisa {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #edf2f7;
+    border-radius: 10px;
+    padding: 10px 16px;
+    gap: 10px;
+    flex-grow: 1; /* Ocupa todo o espaço disponível no cabeçalho */
+    max-width: 480px;
+}
+
+/* Ícone da lupa dentro da barra */
+.icone-busca {
+    font-size: 14px;
+    color: #718096;
+}
+
+/* Campo de texto da busca */
+.barra-pesquisa input {
+    border: none;
+    outline: none;
+    font-size: 13px;
+    color: #1a1c23;
+    width: 100%;
+    background: transparent;
+    font-weight: 500;
+}
+
+/* Placeholder cinza suave */
+.barra-pesquisa input::placeholder {
+    color: #a0aec0;
+}
+
+/* Título e subtítulo da página */
+.titulo-pagina {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Quebra em telas menores */
+    gap: 16px;
+}
+
+/* Título grande */
+.titulo-pagina h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #1a1c23;
+    letter-spacing: -0.5px;
+}
+
+/* Subtítulo descritivo da página */
+.titulo-pagina p {
+    font-size: 13px;
+    color: #718096;
+    margin-top: 4px;
+}
+
+/* Botão "+ Nova Turma" no canto do título */
+.btn-nova-turma {
+    background: #00509d;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-nova-turma:hover {
+    background: #003b75;
+    transform: translateY(-1px); /* Efeito micro de elevação */
+}
+
+/* Grade de cartões de turmas (2 colunas no desktop) */
+.grade-turmas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+/* Cartão individual de turma */
+.cartao-turma {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden; /* Corta a faixa colorida no topo */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Leve elevação ao passar o mouse */
+.cartao-turma:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Faixa colorida no topo do cartão */
+.cartao-turma-topo {
+    padding: 20px 24px;
+    color: #fff;
+}
+
+.cartao-turma-topo h3 {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    letter-spacing: -0.3px;
+}
+
+/* Etiqueta de série (ex: Fundamental II) */
+.turma-serie {
+    font-size: 11px;
+    font-weight: 600;
+    opacity: 0.85;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Cores diferentes para cada faixa de turma */
+.faixa-azul { background: linear-gradient(135deg, #00509d, #0066cc); }
+.faixa-verde { background: linear-gradient(135deg, #2b8a3e, #38a169); }
+.faixa-laranja { background: linear-gradient(135deg, #e8590c, #f76707); }
+.faixa-roxa { background: linear-gradient(135deg, #6741d9, #845ef7); }
+
+/* Corpo do cartão com informações em linhas */
+.cartao-turma-corpo {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Linha individual de informação */
+.turma-info-linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+}
+
+/* Rótulo cinza no lado esquerdo (ex: "Alunos") */
+.turma-label {
+    color: #718096;
+    font-weight: 500;
+}
+
+/* Valor em negrito no lado direito */
+.turma-info-linha strong {
+    color: #1a1c23;
+    font-weight: 700;
+}
+
+/* Rodapé do cartão (botões editar/excluir) */
+.cartao-turma-rodape {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 24px;
+    border-top: 1px solid #edf2f7;
+}
+
+/* Botão de editar turma */
+.btn-editar {
+    background: transparent;
+    border: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: #00509d;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+.btn-editar:hover {
+    background: #f2f7ff;
+}
+
+/* Botão X para excluir turma */
+.btn-excluir {
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    color: #c53030;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s;
+}
+
+.btn-excluir:hover {
+    background: #fff5f5;
+}
+
+/* Retira margem inferior do grupo-input dentro do modal */
+.sem-margem {
+    margin-bottom: 0 !important;
+}
+
+/* Botão "Cancelar" do modal */
+.btn-cancelar {
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    color: #4a5568;
+    cursor: pointer;
+    padding: 10px 16px;
+}
+
+.btn-cancelar:hover {
+    color: #1a1c23;
+}
+
+/* Botão "Salvar Turma" azul do modal */
+.btn-salvar-turma {
+    background: #00509d;
+    color: #fff;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-salvar-turma:hover {
+    background: #003b75;
+}
+
+/* --- INÍCIO: REGRAS DE RESPONSIVIDADE (Telas Menores) --- */
+@media (max-width: 768px) {
+    /* Muda a direção do layout principal para coluna (um embaixo do outro) */
+    .dashboard-body {
+        flex-direction: column;
+    }
+
+    /* Faz a barra lateral ocupar 100% da largura na tela do celular */
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #edf2f7;
+        padding: 24px 0;
+    }
+
+    /* Mostra o botão hambúrguer no celular */
+    .hamburger-btn {
+        display: flex;
+    }
+
+    /* Distribui logo e botão de menu para lados opostos com espaço no meio */
+    .sidebar-logo {
+        justify-content: space-between;
+        margin-bottom: 0; /* Remove a margem por padrão, só tem quando aberto o menu */
+        padding: 0 24px;
+    }
+
+    /* O menu começa oculto no celular (js vai ativar) */
+    .sidebar-nav {
+        display: none;
+        margin-top: 24px; /* Compensa a margem tirada do logo */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        padding: 0 16px;
+    }
+    
+    /* Quando o botão é ativado e a classe entra em cena, vira grid */
+    .sidebar-nav.open {
+        display: grid;
+    }
+
+    /* Ajusta os botões do menu nas bordas */
+    .nav-item {
+        margin-right: 0;
+        border-radius: 8px;
+        justify-content: flex-start;
+        padding: 12px 16px;
+    }
+
+    /* A opção de sair começa escondida */
+    .sidebar-footer {
+        display: none;
+        margin-top: 16px;
+    }
+    
+    /* Exibe se o menu estiver marcado como aberto .open */
+    .sidebar-footer.open {
+        display: block;
+    }
+
+    /* Reduz as margens gerais da área central de trabalho */
+    .dashboard-main {
+        padding: 16px;
+        gap: 24px;
+    }
+
+    /* Permite quebra de linha do cabeçalho de usuário se a tela encolher muito */
+    .dashboard-header {
+        flex-wrap: wrap;
+        gap: 16px;
+        justify-content: space-between;
+    }
+
+    /* Mostra duas métricas por linha para tablets ou visões medianas */
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    /* Coloca os gráficos em formato lista (um embaixo do outro) */
+    .charts-row {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .narrow-card {
+        width: 100%;
+    }
+
+    /* Permite botão de detalhes do gráfico empilhar se faltar espaço */
+    .chart-header-flex {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+    }
+
+    /* Ajusta a margem do botão para preencher horizontalmente */
+    .chart-header-flex .btn-primary {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    /* Adiciona barra de rolagem horizontal onde a tabela transborda na tela */
+    .table-container {
+        overflow-x: auto;
+    }
+
+    /* Trava largura mínima da tabela para suas células não achatarem demais os textos */
+    table {
+        min-width: 600px;
+    }
+
+    /* Reaproxima o botão de ações flutuante para as bordas do celular */
+    .fab-btn {
+        bottom: 16px;
+        right: 16px;
+    }
+
+    /* Título e botão da página de turmas empilham */
+    .titulo-pagina {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /* Botão Nova Turma ocupa a largura toda */
+    .btn-nova-turma {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Cartões de turma em coluna única */
+    .grade-turmas {
+        grid-template-columns: 1fr;
+    }
+
+    /* Barra de pesquisa ocupa tudo */
+    .barra-pesquisa {
+        max-width: 100%;
+    }
+
+    /* Modal se adapta às bordas do celular */
+    .modal-container {
+        margin: 16px;
+        padding: 24px;
+    }
+}
+
+/* Telas menores de celulares de pé (Portrait) */
+@media (max-width: 480px) {
+    /* Exibe apenas uma única métrica por linha para encaixar melhor */
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Força os botões do menu de navegação a ficarem um abaixo do outro com largura máxima */
+    .sidebar-nav {
+        grid-template-columns: 1fr;
+    }
+}
+/* --- FIM: REGRAS DE RESPONSIVIDADE --- */

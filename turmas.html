@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turmas - Academic Atelier</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dashboard-body">
+    <!-- BARRA LATERAL (mesma do painel, com "Turmas" ativo) -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="icone-logo-pequeno">
+                <!-- SVG logo em escala reduzida -->
+                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000"
+                    preserveAspectRatio="xMidYMid meet">
+                    <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#fff" stroke="none">
+                        <path
+                            d="M2450 4251 c-447 -183 -2060 -865 -2080 -879 -14 -11 -32 -38 -40 -60 -13 -37 -13 -47 0 -84 8 -22 26 -49 40 -60 14 -10 500 -219 1080 -464 797 -337 1067 -447 1105 -451 47 -4 97 16 898 355 l847 359 0 -527 0 -528 -30 -12 c-108 -45 -174 -261 -121 -399 l18 -49 -58 -263 c-33 -144 -59 -273 -59 -286 0 -29 42 -73 69 -73 11 0 52 17 92 37 62 33 83 38 151 42 83 3 144 -12 200 -51 14 -10 40 -21 57 -24 25 -5 36 -1 61 24 16 17 30 37 30 45 0 8 -34 136 -76 283 l-76 268 16 46 c10 27 16 76 16 122 0 102 -28 178 -86 237 l-44 44 0 566 0 566 140 59 c148 62 182 87 195 146 10 44 -3 86 -34 118 -27 26 -137 73 -1844 794 -180 76 -338 138 -350 138 -12 0 -65 -18 -117 -39z" />
+                        <path
+                            d="M1202 2208 c3 -411 4 -424 25 -463 29 -54 62 -83 168 -150 244 -154 545 -263 855 -312 157 -24 461 -24 620 1 249 39 479 110 690 216 229 114 306 171 346 255 l24 50 0 414 c0 389 -1 413 -17 408 -10 -2 -297 -123 -638 -268 l-620 -264 -90 0 -90 0 -629 268 c-346 147 -633 267 -638 267 -5 0 -8 -184 -6 -422z" />
+                    </g>
+                </svg>
+            </div>
+            <div class="sidebar-logo-text">
+                <h2>The Atelier</h2>
+                <p>EDUCAÇÃO ESPECIALIZADA</p>
+            </div>
+        </div>
+
+        <!-- Navegação: "Turmas" marcado como ativo nesta página -->
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">⊞</span> Painel Principal
+            </a>
+            <a href="turmas.html" class="nav-item ativo">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 2304 1536">
+                        <path fill="currentColor" d="m1774 708l18 316q4 69-82 128t-235 93.5t-323 34.5t-323-34.5t-235-93.5t-82-128l18-316l574 181q22 7 48 7t48-7zm530-324q0 23-22 31L1162 767q-4 1-10 1t-10-1L490 561q-43 34-71 111.5T385 851q63 36 63 109q0 69-58 107l58 433q2 14-8 25q-9 11-24 11H224q-15 0-24-11q-10-11-8-25l58-433q-58-38-58-107q0-73 65-111q11-207 98-330L22 415q-22-8-22-31t22-31L1142 1q4-1 10-1t10 1l1120 352q22 8 22 31z"/>
+                    </svg>
+                </span> Turmas
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">👥</span> Alunos
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">📖</span> Planos de Aula
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="login.html" class="nav-item logout">
+                <span class="nav-icon">↪</span> Sair
+            </a>
+        </div>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL DA PÁGINA DE TURMAS -->
+    <main class="dashboard-main">
+
+        <!-- Cabeçalho superior com busca e perfil -->
+        <header class="dashboard-header">
+            <div class="barra-pesquisa">
+                <span class="icone-busca">🔍</span>
+                <input type="text" placeholder="Buscar turmas, disciplinas...">
+            </div>
+            <div class="header-actions">
+                <button class="icon-button notification-btn"><span class="badge"></span>🔔</button>
+                <img src="https://ui-avatars.com/api/?name=Marcos&background=00509d&color=fff&size=80"
+                    alt="Foto do perfil" class="avatar">
+            </div>
+        </header>
+
+        <!-- Título e botão de ação -->
+        <section class="titulo-pagina">
+            <div>
+                <h1>Turmas</h1>
+                <p>Gerencie suas turmas e disciplinas acadêmicas.</p>
+            </div>
+            <button class="btn-nova-turma" id="btnAbrirModal">+ Nova Turma</button>
+        </section>
+
+        <!-- Grade de cartões de turmas (populada pelo JavaScript) -->
+        <section class="grade-turmas">
+            <!-- Os cartões são gerados automaticamente pelo script -->
+        </section>
+    </main>
+
+    <!-- MODAL: CRIAR NOVA TURMA -->
+    <div class="modal-overlay" id="modalNovaTurma">
+        <div class="modal-container">
+            <!-- Cabeçalho do modal -->
+            <header class="modal-header">
+                <div>
+                    <h2>Criar Nova Turma</h2>
+                    <p>Preencha os dados abaixo para configurar a turma.</p>
+                </div>
+                <button class="fechar-modal" id="btnFecharModal" aria-label="Fechar">×</button>
+            </header>
+
+            <!-- Formulário de criação -->
+            <form class="modal-form" id="formNovaTurma">
+                <!-- Campo: Nome da Turma -->
+                <div class="grupo-input">
+                    <label>NOME DA TURMA</label>
+                    <input type="text" placeholder="Ex: 6º ano A" id="campoNomeTurma" required>
+                </div>
+
+                <!-- Campos lado a lado: Série e Turno -->
+                <div class="input-linha-dupla">
+                    <div class="grupo-input sem-margem">
+                        <label>SÉRIE</label>
+                        <select id="campoSerie">
+                            <option>Fundamental I</option>
+                            <option>Fundamental II</option>
+                            <option>Ensino Médio</option>
+                        </select>
+                    </div>
+                    <div class="grupo-input sem-margem">
+                        <label>TURNO</label>
+                        <select id="campoTurno">
+                            <option>Matutino</option>
+                            <option>Vespertino</option>
+                            <option>Noturno</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Campo: Ano Letivo -->
+                <div class="grupo-input">
+                    <label>ANO LETIVO</label>
+                    <div class="input-com-icone">
+                        <input type="text" value="2024" id="campoAnoLetivo">
+                        <span class="icone-calendario">
+                            <svg width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Botões de ação -->
+                <footer class="modal-rodape">
+                    <button type="button" class="btn-cancelar" id="btnCancelarModal">Cancelar</button>
+                    <button type="submit" class="btn-salvar-turma">Salvar Turma</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ===== ARMAZENAMENTO EM MEMÓRIA (array, nada de banco) =====
+        // Cada turma é um objeto com: nome, serie, turno, anoLetivo
+        const listaTurmas = [
+            { nome: '9º Ano A', serie: 'Fundamental II', turno: 'Matutino', anoLetivo: '2024' },
+            { nome: '9º Ano C', serie: 'Fundamental II', turno: 'Matutino', anoLetivo: '2024' },
+            { nome: '8º Ano B', serie: 'Fundamental II', turno: 'Vespertino', anoLetivo: '2024' },
+            { nome: 'EM 1º Ano', serie: 'Ensino Médio', turno: 'Matutino', anoLetivo: '2024' }
+        ];
+
+        // Lista de cores para as faixas dos cartões (cicla entre elas)
+        const coresFaixa = ['faixa-azul', 'faixa-verde', 'faixa-laranja', 'faixa-roxa'];
+
+        // Controla se o modal está em modo EDIÇÃO ou CRIAÇÃO
+        // Se for null = criando nova turma | Se for número = editando a turma daquele índice
+        let indiceEditando = null;
+
+        // ===== REFERÊNCIAS AOS ELEMENTOS DO DOM =====
+        const modal = document.getElementById('modalNovaTurma');
+        const btnAbrir = document.getElementById('btnAbrirModal');
+        const btnFechar = document.getElementById('btnFecharModal');
+        const btnCancelar = document.getElementById('btnCancelarModal');
+        const formulario = document.getElementById('formNovaTurma');
+        const gradeTurmas = document.querySelector('.grade-turmas');
+        const campoBusca = document.querySelector('.barra-pesquisa input');
+        const tituloModal = document.querySelector('.modal-header h2');
+        const subtituloModal = document.querySelector('.modal-header p');
+        const btnSalvar = document.querySelector('.btn-salvar-turma');
+
+        // ===== FUNÇÕES DO MODAL =====
+
+        // Abre o modal em modo CRIAÇÃO (campos vazios)
+        function abrirModalCriacao() {
+            indiceEditando = null; // Nenhuma turma sendo editada
+            tituloModal.textContent = 'Criar Nova Turma';
+            subtituloModal.textContent = 'Preencha os dados abaixo para configurar a turma.';
+            btnSalvar.textContent = 'Salvar Turma';
+            formulario.reset(); // Limpa todos os campos
+            document.getElementById('campoAnoLetivo').value = '2024'; // Valor padrão
+            modal.classList.add('ativo');
+        }
+
+        // Abre o modal em modo EDIÇÃO (campos preenchidos com os dados existentes)
+        function editarTurma(indice) {
+            indiceEditando = indice; // Guarda qual turma está sendo editada
+            const turma = listaTurmas[indice];
+
+            // Atualiza textos do modal para indicar que é edição
+            tituloModal.textContent = 'Editar Turma';
+            subtituloModal.textContent = `Editando os dados de "${turma.nome}".`;
+            btnSalvar.textContent = 'Atualizar Turma';
+
+            // Preenche os campos com os dados atuais da turma
+            document.getElementById('campoNomeTurma').value = turma.nome;
+            document.getElementById('campoSerie').value = turma.serie;
+            document.getElementById('campoTurno').value = turma.turno;
+            document.getElementById('campoAnoLetivo').value = turma.anoLetivo;
+
+            // Abre o modal
+            modal.classList.add('ativo');
+        }
+
+        // Fecha o modal e reseta o modo
+        function fecharModal() {
+            modal.classList.remove('ativo');
+            formulario.reset();
+            indiceEditando = null; // Volta para modo criação
+        }
+
+        // Escuta cliques nos botões de abrir/fechar
+        btnAbrir.addEventListener('click', abrirModalCriacao);
+        btnFechar.addEventListener('click', fecharModal);
+        btnCancelar.addEventListener('click', fecharModal);
+
+        // Fecha ao clicar na área escura fora do card
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) fecharModal();
+        });
+
+        // ===== FUNÇÃO QUE MONTA O HTML DE UM CARTÃO DE TURMA =====
+        function criarCartaoHTML(turma, indice) {
+            const cor = coresFaixa[indice % coresFaixa.length];
+
+            return `
+                <div class="cartao-turma" data-indice="${indice}">
+                    <div class="cartao-turma-topo ${cor}">
+                        <h3>${turma.nome}</h3>
+                        <span class="turma-serie">${turma.serie}</span>
+                    </div>
+                    <div class="cartao-turma-corpo">
+                        <div class="turma-info-linha">
+                            <span class="turma-label">👥 Alunos</span>
+                            <strong>0</strong>
+                        </div>
+                        <div class="turma-info-linha">
+                            <span class="turma-label">📅 Turno</span>
+                            <strong>${turma.turno}</strong>
+                        </div>
+                        <div class="turma-info-linha">
+                            <span class="turma-label">📆 Ano Letivo</span>
+                            <strong>${turma.anoLetivo}</strong>
+                        </div>
+                    </div>
+                    <div class="cartao-turma-rodape">
+                        <button class="btn-editar" title="Editar turma" onclick="editarTurma(${indice})">✏️ Editar</button>
+                        <button class="btn-excluir" title="Excluir turma" onclick="excluirTurma(${indice})">✕</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ===== FUNÇÃO QUE REDESENHA TODOS OS CARTÕES NA TELA =====
+        function renderizarTurmas(filtro = '') {
+            // Filtra as turmas pelo texto digitado (nome ou serie)
+            const turmasFiltradas = listaTurmas.filter(turma =>
+                turma.nome.toLowerCase().includes(filtro.toLowerCase()) ||
+                turma.serie.toLowerCase().includes(filtro.toLowerCase())
+            );
+
+            // Mensagem amigável caso não encontre nada
+            if (turmasFiltradas.length === 0) {
+                gradeTurmas.innerHTML = `
+                    <p style="color:#718096; font-size:14px; grid-column: 1/-1; text-align:center; padding:40px 0;">
+                        Nenhuma turma encontrada. Clique em "+ Nova Turma" para cadastrar.
+                    </p>`;
+                return;
+            }
+
+            // Monta todo o HTML concatenando os cartões
+            gradeTurmas.innerHTML = turmasFiltradas
+                .map((turma, i) => criarCartaoHTML(turma, listaTurmas.indexOf(turma)))
+                .join('');
+        }
+
+        // ===== SALVAR TURMA (CRIAR ou ATUALIZAR dependendo do modo) =====
+        formulario.addEventListener('submit', (evento) => {
+            evento.preventDefault(); // Impede recarregar a página
+
+            // Captura os valores dos campos
+            const dadosTurma = {
+                nome: document.getElementById('campoNomeTurma').value.trim(),
+                serie: document.getElementById('campoSerie').value,
+                turno: document.getElementById('campoTurno').value,
+                anoLetivo: document.getElementById('campoAnoLetivo').value.trim()
+            };
+
+            // Validação: não aceita nome vazio
+            if (!dadosTurma.nome) {
+                alert('Por favor, preencha o nome da turma.');
+                return;
+            }
+
+            if (indiceEditando !== null) {
+                // MODO EDIÇÃO: atualiza a turma existente no array
+                listaTurmas[indiceEditando] = dadosTurma;
+            } else {
+                // MODO CRIAÇÃO: adiciona no final do array
+                listaTurmas.push(dadosTurma);
+            }
+
+            // Redesenha os cartões e fecha o modal
+            renderizarTurmas(campoBusca.value);
+            fecharModal();
+        });
+
+        // ===== EXCLUIR TURMA =====
+        function excluirTurma(indice) {
+            if (confirm(`Deseja excluir a turma "${listaTurmas[indice].nome}"?`)) {
+                listaTurmas.splice(indice, 1); // Remove do array
+                renderizarTurmas(campoBusca.value); // Redesenha mantendo o filtro
+            }
+        }
+
+        // ===== BUSCA EM TEMPO REAL =====
+        campoBusca.addEventListener('input', (e) => {
+            renderizarTurmas(e.target.value);
+        });
+
+        // ===== RENDERIZAÇÃO INICIAL =====
+        renderizarTurmas();
+    </script>
+</body>
+
+</html>

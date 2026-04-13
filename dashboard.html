@@ -27,14 +27,27 @@
                 <h2>The Atelier</h2>
                 <p>EDUCAÇÃO ESPECIALIZADA</p>
             </div>
+            <!-- INÍCIO: Botão do menu hamburguer para Mobile -->
+            <button class="hamburger-btn" aria-label="Abrir ou fechar menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <!-- FIM: Botão do menu hamburguer para Mobile -->
         </div>
 
         <nav class="sidebar-nav">
             <a href="#" class="nav-item ativo">
                 <span class="nav-icon">⊞</span> Painel Principal
             </a>
-            <a href="#" class="nav-item">
-                <span class="nav-icon">🎓</span> Turmas
+            <!-- Item de navegação para Turmas com ícone SVG customizado -->
+            <a href="turmas.html" class="nav-item">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 2304 1536">
+                        <path fill="currentColor"
+                            d="m1774 708l18 316q4 69-82 128t-235 93.5t-323 34.5t-323-34.5t-235-93.5t-82-128l18-316l574 181q22 7 48 7t48-7zm530-324q0 23-22 31L1162 767q-4 1-10 1t-10-1L490 561q-43 34-71 111.5T385 851q63 36 63 109q0 69-58 107l58 433q2 14-8 25q-9 11-24 11H224q-15 0-24-11q-10-11-8-25l58-433q-58-38-58-107q0-73 65-111q11-207 98-330L22 415q-22-8-22-31t22-31L1142 1q4-1 10-1t10 1l1120 352q22 8 22 31z" />
+                    </svg>
+                </span> Turmas
             </a>
             <a href="#" class="nav-item">
                 <span class="nav-icon">👥</span> Alunos
@@ -70,15 +83,15 @@
             <div class="metric-card">
                 <div class="metric-header">
                     <span class="metric-title">Total de alunos</span>
-                    <div class="metric-icon green-bg">👥</div>
+                    <div class="metric-icon fundo-verde">👥</div>
                 </div>
                 <h3 class="metric-value">x</h3>
             </div>
 
-            <div class="metric-card border-bottom-blue">
+            <div class="metric-card borda-inferior-azul">
                 <div class="metric-header">
                     <span class="metric-title">Total de turmas</span>
-                    <div class="metric-icon blue-bg">📘</div>
+                    <div class="metric-icon fundo-azul">📘</div>
                 </div>
                 <h3 class="metric-value">x</h3>
             </div>
@@ -86,17 +99,17 @@
             <div class="metric-card">
                 <div class="metric-header">
                     <span class="metric-title">Média geral da escola</span>
-                    <div class="metric-icon lightblue-bg">📈</div>
+                    <div class="metric-icon fundo-azul-claro">📈</div>
                 </div>
                 <h3 class="metric-value">x</h3>
             </div>
 
-            <div class="metric-card danger-card">
+            <div class="metric-card cartao-perigo">
                 <div class="metric-header">
                     <span class="metric-title">Alunos em risco</span>
-                    <div class="metric-icon red-bg">⚠️</div>
+                    <div class="metric-icon fundo-vermelho">⚠️</div>
                 </div>
-                <h3 class="metric-value text-red">42</h3>
+                <h3 class="metric-value texto-vermelho">42</h3>
             </div>
         </section>
 
@@ -132,9 +145,9 @@
                     </div>
                 </div>
 
-                <div class="chart-legend">
-                    <span class="legend-item"><span class="dot blue-dot"></span> Presença</span>
-                    <span class="legend-item"><span class="dot gray-dot"></span> Faltas</span>
+                <div class="legenda-grafico">
+                    <span class="item-legenda"><span class="ponto ponto-azul"></span> Presença</span>
+                    <span class="item-legenda"><span class="ponto ponto-cinza"></span> Faltas</span>
                 </div>
             </div>
         </section>
@@ -143,10 +156,10 @@
         <section class="table-section">
             <div class="table-header-custom">
                 <h3>Semáforo de Desempenho</h3>
-                <div class="status-legend">
-                    <span class="legend-item"><span class="dot green-dot"></span> Estável</span>
-                    <span class="legend-item"><span class="dot yellow-dot"></span> Atenção</span>
-                    <span class="legend-item"><span class="dot red-dot"></span> Crítico</span>
+                <div class="legenda-status">
+                    <span class="item-legenda"><span class="ponto ponto-verde"></span> Estável</span>
+                    <span class="item-legenda"><span class="ponto ponto-amarelo"></span> Atenção</span>
+                    <span class="item-legenda"><span class="ponto ponto-vermelho"></span> Crítico</span>
                 </div>
             </div>
 
@@ -164,36 +177,36 @@
                     <tbody>
                         <tr>
                             <td>
-                                <div class="student-info">
-                                    <span class="initials bg-light-blue text-dark-blue">AM</span>
-                                    <span class="student-name">Ana Maria Oliveira</span>
+                                <div class="info-aluno">
+                                    <span class="iniciais-nome fundo-azul-claro texto-azul-escuro">AM</span>
+                                    <span class="nome-aluno">Ana Maria Oliveira</span>
                                 </div>
                             </td>
-                            <td><span class="dot green-dot"></span></td>
+                            <td><span class="ponto ponto-verde"></span></td>
                             <td>9º Ano C</td>
                             <td><strong>9.5</strong></td>
                             <td><button class="btn-icon">👁</button></td>
                         </tr>
                         <tr>
                             <td>
-                                <div class="student-info">
-                                    <span class="initials bg-light-gray text-dark-gray">JS</span>
-                                    <span class="student-name">João Silva Santos</span>
+                                <div class="info-aluno">
+                                    <span class="iniciais-nome fundo-cinza-claro texto-cinza-escuro">JS</span>
+                                    <span class="nome-aluno">João Silva Santos</span>
                                 </div>
                             </td>
-                            <td><span class="dot yellow-dot"></span></td>
+                            <td><span class="ponto ponto-amarelo"></span></td>
                             <td>8º Ano A</td>
                             <td><strong>6.8</strong></td>
                             <td><button class="btn-icon">👁</button></td>
                         </tr>
                         <tr>
                             <td>
-                                <div class="student-info">
-                                    <span class="initials bg-light-blue text-dark-blue">RC</span>
-                                    <span class="student-name">Ricardo Carvalho</span>
+                                <div class="info-aluno">
+                                    <span class="iniciais-nome fundo-azul-claro texto-azul-escuro">RC</span>
+                                    <span class="nome-aluno">Ricardo Carvalho</span>
                                 </div>
                             </td>
-                            <td><span class="dot red-dot"></span></td>
+                            <td><span class="ponto ponto-vermelho"></span></td>
                             <td>EM 1º Ano</td>
                             <td><strong>4.2</strong></td>
                             <td><button class="btn-icon">👁</button></td>
@@ -207,6 +220,23 @@
 
     <!-- Botão de Ação Rápida Flutuante -->
     <button class="fab-btn">+</button>
+
+    <!-- INÍCIO: Código extra para fazer o menu Hamburguer funcionar -->
+    <script>
+        // Seleciona as tags do menu para injetar o comportamento
+        const btnMenu = document.querySelector('.hamburger-btn');
+        const menuNavegacao = document.querySelector('.sidebar-nav');
+        const rodapeNavegacao = document.querySelector('.sidebar-footer');
+
+        // ativado toda vez que existir click no botão de hamburguer
+        btnMenu.addEventListener('click', () => {
+            // Adiciona/tira a classe '.active' e '.open' toda vez que é clicado
+            btnMenu.classList.toggle('active');
+            menuNavegacao.classList.toggle('open');
+            rodapeNavegacao.classList.toggle('open');
+        });
+    </script>
+
 </body>
 
 </html>
