@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Atelier - Criar Conta</title> <!-- Define o título -->
+    <link rel="stylesheet" href="style.css"> <!-- Importa os estilos que usamos nas outras páginas -->
+
+</head>
+
+<body>
+    <header class="cabecalho">
+        <!-- Ícone do logotipo do topo -->
+        <div class="icone-logo">
+            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000"
+                preserveAspectRatio="xMidYMid meet">
+                <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#00509d" stroke="none">
+                    <path d="M2450 4251 c-447 -183 -2060 -865 -2080 -879 -14 -11 -32 -38 -40 -60 -13 -37 -13 -47 0 -84 8 -22 26 -49 40 -60 14 -10 500 -219 1080 -464 797 -337 1067 -447 1105 -451 47 -4 97 16 898 355 l847 359 0 -527 0 -528 -30 -12 c-108 -45 -174 -261 -121 -399 l18 -49 -58 -263 c-33 -144 -59 -273 -59 -286 0 -29 42 -73 69 -73 11 0 52 17 92 37 62 33 83 38 151 42 83 3 144 -12 200 -51 14 -10 40 -21 57 -24 25 -5 36 -1 61 24 16 17 30 37 30 45 0 8 -34 136 -76 283 l-76 268 16 46 c10 27 16 76 16 122 0 102 -28 178 -86 237 l-44 44 0 566 0 566 140 59 c148 62 182 87 195 146 10 44 -3 86 -34 118 -27 26 -137 73 -1844 794 -180 76 -338 138 -350 138 -12 0 -65 -18 -117 -39z" />
+                    <path d="M1202 2208 c3 -411 4 -424 25 -463 29 -54 62 -83 168 -150 244 -154 545 -263 855 -312 157 -24 461 -24 620 1 249 39 479 110 690 216 229 114 306 171 346 255 l24 50 0 414 c0 389 -1 413 -17 408 -10 -2 -297 -123 -638 -268 l-620 -264 -90 0 -90 0 -629 268 c-346 147 -633 267 -638 267 -5 0 -8 -184 -6 -422z" />
+                </g>
+            </svg>
+        </div>
+        <h1>Criar Conta</h1> <!-- Título para criação -->
+        <p>Junte-se ao Academic Atelier</p> <!-- Subtítulo do cabeçalho -->
+    </header>
+
+    <main class="cartao-login">
+        <!-- Formulário para novos dados -->
+        <form id="cadastroForm">
+            <div class="grupo-input">
+                <label for="nome">NOME COMPLETO</label>
+                <input type="text" id="nome" placeholder="Seu Nome" required>
+            </div>
+
+            <div class="grupo-input">
+                <label for="email">E-MAIL</label>
+                <input type="email" id="email" placeholder="seu@email.com" required>
+            </div>
+
+            <div class="grupo-input">
+                <label for="password">SENHA</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+
+            <!-- Botão principal -->
+            <button type="submit" class="btn-entrar">
+                Criar Conta <span>&rarr;</span>
+            </button>
+
+            <!-- Feedback da operação, se sucesso ou erro -->
+            <div class="mensagem-erro" id="statusMsg" style="display: none;">
+                <span class="icone-erro" style="background-color: #234e45;">✓</span> Conta criada com sucesso!
+            </div>
+        </form>
+
+
+
+        <div class="link-cadastro">
+            Já possui uma conta? <a href="index.html">Fazer Login</a> <!-- Retorno -->
+        </div>
+    </main>
+
+    <!-- Rodapé preservando o layout -->
+    <footer class="rodape">
+        <span><svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                <!-- Ícones default SVGs -->
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
+            </svg> Suporte</span>
+        <span><svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855A7.97 7.97 0 0 0 5.145 4H7.5V1.077zM4.09 4a9.267 9.267 0 0 1 .64-1.539 6.7 6.7 0 0 1 .597-.933A7.025 7.025 0 0 0 2.255 4H4.09zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a6.958 6.958 0 0 0-.656 2.5h2.49zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5H4.847zM8.5 5v2.5h2.99a12.495 12.495 0 0 0-.337-2.5H8.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5H4.51zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5H8.5zM5.145 12c.138.832.258 1.53.39 2.082.251.527.502.83.765 1.023V12H5.145zm3.355 0v3.105c.263-.193.514-.496.765-1.023.131-.552.25-1.25.39-2.082H8.5zm-4.41 0h-2.49a6.959 6.959 0 0 0 .656 2.5c.174-.782.282-1.623.312-2.5zm6.818 0c.03.877.138 1.718.312 2.5a6.959 6.959 0 0 0 .656-2.5h-2.49zM11.91 4a9.26 9.26 0 0 0-.64-1.539 6.7 6.7 0 0 0-.597-.933A7.024 7.024 0 0 1 13.745 4h-1.834zm-1.41-2.923c-.67.204-1.335.82-1.887 1.855A7.97 7.97 0 0 1 10.855 4H8.5V1.077z" />
+            </svg> Português (BR)</span>
+    </footer>
+</body>
+
+</html>

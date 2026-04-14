@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Turmas - Academic Atelier</title>
     <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body class="dashboard-body">
@@ -57,7 +58,7 @@
         </nav>
 
         <div class="sidebar-footer">
-            <a href="login.html" class="nav-item logout">
+            <a href="#" onclick="logout()" class="nav-item logout">
                 <span class="nav-icon">↪</span> Sair
             </a>
         </div>
@@ -66,12 +67,8 @@
     <!-- CONTEÚDO PRINCIPAL DA PÁGINA DE TURMAS -->
     <main class="dashboard-main">
 
-        <!-- Cabeçalho superior com busca e perfil -->
-        <header class="dashboard-header">
-            <div class="barra-pesquisa">
-                <span class="icone-busca">🔍</span>
-                <input type="text" placeholder="Buscar turmas, disciplinas...">
-            </div>
+        <!-- Cabeçalho superior -->
+        <header class="dashboard-header" style="justify-content: flex-end;">
             <div class="header-actions">
                 <button class="icon-button notification-btn"><span class="badge"></span>🔔</button>
                 <img src="https://ui-avatars.com/api/?name=Marcos&background=00509d&color=fff&size=80"
@@ -134,15 +131,43 @@
                     </div>
                 </div>
 
-                <!-- Campo: Ano Letivo -->
-                <div class="grupo-input">
-                    <label>ANO LETIVO</label>
-                    <div class="input-com-icone">
-                        <input type="text" value="2024" id="campoAnoLetivo">
-                        <span class="icone-calendario">
-                            <svg width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg>
-                        </span>
+                <!-- Campos lado a lado: Ano e Status -->
+                <div class="input-linha-dupla">
+                    <div class="grupo-input sem-margem">
+                        <label>ANO LETIVO</label>
+                        <div class="input-com-icone">
+                            <input type="text" value="2024" id="campoAnoLetivo">
+                            <span class="icone-calendario">
+                                <svg width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg>
+                            </span>
+                        </div>
                     </div>
+                    <div class="grupo-input sem-margem">
+                        <label>STATUS DA TURMA</label>
+                        <select id="campoStatus">
+                            <option value="verde">Tudo Normal (Verde)</option>
+                            <option value="amarelo">Atenção (Amarelo)</option>
+                            <option value="vermelho">Atraso/Urgente (Vermelho)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Campos de Conteúdo Pedagógico -->
+                <div class="input-linha-dupla">
+                    <div class="grupo-input sem-margem">
+                        <label>ÚLTIMO CONTEÚDO</label>
+                        <input type="text" placeholder="Ex: Fotossíntese" id="campoUltimoConteudo">
+                    </div>
+                    <div class="grupo-input sem-margem">
+                        <label>PRÓXIMA AULA</label>
+                        <input type="text" placeholder="Ex: Cadeias Alimentares" id="campoProximaAula">
+                    </div>
+                </div>
+
+                <!-- Quantidade de Pendências -->
+                <div class="grupo-input" style="margin-top: 12px;">
+                    <label>PENDÊNCIAS (Correções, etc) </label>
+                    <input type="number" id="campoPendencias" placeholder="Ex: 0" min="0" value="0">
                 </div>
 
                 <!-- Botões de ação -->
@@ -151,6 +176,26 @@
                     <button type="submit" class="btn-salvar-turma">Salvar Turma</button>
                 </footer>
             </form>
+        </div>
+    </div>
+
+    <!-- MODAL: NOTAS RÁPIDAS -->
+    <div class="modal-overlay" id="modalNotas">
+        <div class="modal-container" style="max-width: 500px;">
+            <header class="modal-header">
+                <div>
+                    <h2>Anotações Diárias</h2>
+                    <p id="subtituloModalNotas">Bloco livre de anotações.</p>
+                </div>
+                <button class="fechar-modal" onclick="fecharModalNotas()" aria-label="Fechar">×</button>
+            </header>
+            <div class="modal-form" style="padding-top: 16px;">
+                <textarea id="campoAnotacoesTurma" placeholder="A turma teve dificuldade hoje, lembrar de cobrar a matéria faltante..." style="width: 100%; height: 180px; padding: 16px; border-radius: 8px; border: 1px solid #e2e8f0; resize: vertical; box-sizing: border-box; font-family: inherit; font-size: 14px; background-color: #f8f9fb;"></textarea>
+                <footer class="modal-rodape">
+                    <button type="button" class="btn-cancelar" onclick="fecharModalNotas()">Cancelar</button>
+                    <button type="button" class="btn-salvar-turma" onclick="salvarNotas()">Salvar Anotação</button>
+                </footer>
+            </div>
         </div>
     </div>
 
@@ -168,12 +213,12 @@
         });
 
         // ===== ARMAZENAMENTO EM MEMÓRIA (array, nada de banco) =====
-        // Cada turma é um objeto com: nome, serie, turno, anoLetivo
+        // Cada turma é um objeto com: nome, serie, turno, anoLetivo, etc.
         const listaTurmas = [
-            { nome: '9º Ano A', serie: 'Fundamental II', turno: 'Matutino', anoLetivo: '2024' },
-            { nome: '9º Ano C', serie: 'Fundamental II', turno: 'Matutino', anoLetivo: '2024' },
-            { nome: '8º Ano B', serie: 'Fundamental II', turno: 'Vespertino', anoLetivo: '2024' },
-            { nome: 'EM 1º Ano', serie: 'Ensino Médio', turno: 'Matutino', anoLetivo: '2024' }
+            { nome: '9º Ano A', serie: 'Fundamental II', turno: 'Matutino', anoLetivo: '2024', ultimoConteudo: 'Revolução Francesa', proximaAula: 'Era Napoleônica', pendencias: 3, status: 'amarelo' },
+            { nome: '9º Ano C', serie: 'Fundamental II', turno: 'Matutino', anoLetivo: '2024', ultimoConteudo: 'Independência do Brasil', proximaAula: 'Primeiro Reinado', pendencias: 0, status: 'verde' },
+            { nome: '8º Ano B', serie: 'Fundamental II', turno: 'Vespertino', anoLetivo: '2024', ultimoConteudo: 'Revolução Industrial', proximaAula: 'Revisão e Prova', pendencias: 5, status: 'vermelho' },
+            { nome: 'EM 1º Ano', serie: 'Ensino Médio', turno: 'Matutino', anoLetivo: '2024', ultimoConteudo: 'Grécia Antiga', proximaAula: 'Império Romano', pendencias: 0, status: 'verde' }
         ];
 
         // Lista de cores para as faixas dos cartões (cicla entre elas)
@@ -190,7 +235,6 @@
         const btnCancelar = document.getElementById('btnCancelarModal');
         const formulario = document.getElementById('formNovaTurma');
         const gradeTurmas = document.querySelector('.grade-turmas');
-        const campoBusca = document.querySelector('.barra-pesquisa input');
         const tituloModal = document.querySelector('.modal-header h2');
         const subtituloModal = document.querySelector('.modal-header p');
         const btnSalvar = document.querySelector('.btn-salvar-turma');
@@ -223,6 +267,10 @@
             document.getElementById('campoSerie').value = turma.serie;
             document.getElementById('campoTurno').value = turma.turno;
             document.getElementById('campoAnoLetivo').value = turma.anoLetivo;
+            document.getElementById('campoUltimoConteudo').value = turma.ultimoConteudo || '';
+            document.getElementById('campoProximaAula').value = turma.proximaAula || '';
+            document.getElementById('campoPendencias').value = turma.pendencias || 0;
+            document.getElementById('campoStatus').value = turma.status || 'verde';
 
             // Abre o modal
             modal.classList.add('ativo');
@@ -245,60 +293,125 @@
             if (e.target === modal) fecharModal();
         });
 
+        // ===== FUNÇÕES DO MODAL DE NOTAS =====
+        let indiceNotas = null;
+        const modalNotas = document.getElementById('modalNotas');
+        const campoAnotacoes = document.getElementById('campoAnotacoesTurma');
+        const subtituloNotas = document.getElementById('subtituloModalNotas');
+
+        function abrirModalNotas(indice) {
+            indiceNotas = indice;
+            const turma = listaTurmas[indice];
+            subtituloNotas.textContent = `Anotações da turma: ${turma.nome}`;
+            campoAnotacoes.value = turma.notas || ''; // Carrega o que tinha salvo (em memória)
+            modalNotas.classList.add('ativo');
+        }
+
+        function fecharModalNotas() {
+            modalNotas.classList.remove('ativo');
+            indiceNotas = null;
+        }
+
+        function salvarNotas() {
+            if (indiceNotas !== null) {
+                listaTurmas[indiceNotas].notas = campoAnotacoes.value; // Salva texto no array
+                // Não precisa re-renderizar porque as notas vivem dentro da gaveta
+            }
+            fecharModalNotas();
+        }
+
+        modalNotas.addEventListener('click', (e) => {
+            if (e.target === modalNotas) fecharModalNotas();
+        });
+
+        // ===== ICONES SVG PARA OS CARTÕES =====
+        const svgAlunos = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right:4px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>`;
+        const svgTurno = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>`;
+        const svgCheck = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38a169" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+        const svgSeta = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00509d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>`;
+        const svgNotas = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-top; margin-right: 4px;"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>`;
+        const svgCont = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-top; margin-right: 4px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>`;
+        const svgEditar = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-top; margin-right: 4px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`;
+        const svgLixeira = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>`;
+        const svgCheckBranco = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+
         // ===== FUNÇÃO QUE MONTA O HTML DE UM CARTÃO DE TURMA =====
         function criarCartaoHTML(turma, indice) {
             const cor = coresFaixa[indice % coresFaixa.length];
 
             return `
-                <div class="cartao-turma" data-indice="${indice}">
+                <div class="cartao-turma status-border-${turma.status}" data-indice="${indice}">
                     <div class="cartao-turma-topo ${cor}">
-                        <h3>${turma.nome}</h3>
+                        <div class="turma-header-superior">
+                            <h3>${turma.nome}</h3>
+                            ${turma.pendencias > 0 
+                                ? `<span class="badge-pendencia alerta-${turma.status}" title="${turma.pendencias} pendências">${turma.pendencias}</span>` 
+                                : `<span class="badge-pendencia alerta-verde" title="Sem pendências">${svgCheckBranco}</span>`}
+                        </div>
                         <span class="turma-serie">${turma.serie}</span>
                     </div>
-                    <div class="cartao-turma-corpo">
-                        <div class="turma-info-linha">
-                            <span class="turma-label">👥 Alunos</span>
-                            <strong>0</strong>
+                    
+                    <div class="cartao-turma-corpo novo-corpo">
+                        <div class="turma-info-basica">
+                            <span><span class="turma-icone">${svgAlunos}</span>0 alunos</span>
+                            <span><span class="turma-icone">${svgTurno}</span>${turma.turno}</span>
                         </div>
-                        <div class="turma-info-linha">
-                            <span class="turma-label">📅 Turno</span>
-                            <strong>${turma.turno}</strong>
-                        </div>
-                        <div class="turma-info-linha">
-                            <span class="turma-label">📆 Ano Letivo</span>
-                            <strong>${turma.anoLetivo}</strong>
+                        
+                        <div class="turma-conteudos">
+                            <div class="conteudo-item">
+                                <small>ÚLTIMO REGISTRO</small>
+                                <p>${svgCheck}${turma.ultimoConteudo || 'Nenhum registro'}</p>
+                            </div>
+                            <div class="conteudo-item">
+                                <small>PRÓXIMA AULA</small>
+                                <p>${svgSeta}${turma.proximaAula || 'Não planejado'}</p>
+                            </div>
                         </div>
                     </div>
+                    
+                    <div class="cartao-turma-botoes-acao">
+                        <button class="btn-acao-rapida" title="Anotações Rápidas" onclick="abrirModalNotas(${indice})">${svgNotas}Notas</button>
+                        <button class="btn-acao-rapida" title="Plano de Ensino" onclick="window.location.href='planos.html'">${svgCont}Cont.</button>
+                    </div>
+
                     <div class="cartao-turma-rodape">
-                        <button class="btn-editar" title="Editar turma" onclick="editarTurma(${indice})">✏️ Editar</button>
-                        <button class="btn-excluir" title="Excluir turma" onclick="excluirTurma(${indice})">✕</button>
+                        <button class="btn-editar" title="Editar turma" onclick="editarTurma(${indice})">${svgEditar}Editar</button>
+                        <button class="btn-excluir" title="Excluir turma" onclick="excluirTurma(${indice})">${svgLixeira}</button>
                     </div>
                 </div>
             `;
         }
 
         // ===== FUNÇÃO QUE REDESENHA TODOS OS CARTÕES NA TELA =====
-        function renderizarTurmas(filtro = '') {
-            // Filtra as turmas pelo texto digitado (nome ou serie)
-            const turmasFiltradas = listaTurmas.filter(turma =>
-                turma.nome.toLowerCase().includes(filtro.toLowerCase()) ||
-                turma.serie.toLowerCase().includes(filtro.toLowerCase())
-            );
-
-            // Mensagem amigável caso não encontre nada
-            if (turmasFiltradas.length === 0) {
+        function renderizarTurmas() {
+            // Mensagem amigável caso a lista de turmas esteja vazia
+            if (listaTurmas.length === 0) {
                 gradeTurmas.innerHTML = `
                     <p style="color:#718096; font-size:14px; grid-column: 1/-1; text-align:center; padding:40px 0;">
-                        Nenhuma turma encontrada. Clique em "+ Nova Turma" para cadastrar.
+                        Nenhuma turma cadastrada. Clique em "+ Nova Turma" para começar.
                     </p>`;
                 return;
             }
 
-            // Monta todo o HTML concatenando os cartões
-            gradeTurmas.innerHTML = turmasFiltradas
-                .map((turma, i) => criarCartaoHTML(turma, listaTurmas.indexOf(turma)))
+            // Monta todo o HTML concatenando os cartões diretamente
+            gradeTurmas.innerHTML = listaTurmas
+                .map((turma, i) => criarCartaoHTML(turma, i))
                 .join('');
         }
+
+        // ===== AUTOMATIZAR STATUS POR QTD PENDÊNCIAS =====
+        document.getElementById('campoPendencias').addEventListener('input', (e) => {
+            const qtd = parseInt(e.target.value) || 0;
+            const campoStatus = document.getElementById('campoStatus');
+            
+            if (qtd === 0) {
+                campoStatus.value = 'verde';
+            } else if (qtd <= 4) {
+                campoStatus.value = 'amarelo';
+            } else {
+                campoStatus.value = 'vermelho';
+            }
+        });
 
         // ===== SALVAR TURMA (CRIAR ou ATUALIZAR dependendo do modo) =====
         formulario.addEventListener('submit', (evento) => {
@@ -309,7 +422,11 @@
                 nome: document.getElementById('campoNomeTurma').value.trim(),
                 serie: document.getElementById('campoSerie').value,
                 turno: document.getElementById('campoTurno').value,
-                anoLetivo: document.getElementById('campoAnoLetivo').value.trim()
+                anoLetivo: document.getElementById('campoAnoLetivo').value.trim(),
+                ultimoConteudo: document.getElementById('campoUltimoConteudo').value.trim(),
+                proximaAula: document.getElementById('campoProximaAula').value.trim(),
+                pendencias: parseInt(document.getElementById('campoPendencias').value) || 0,
+                status: document.getElementById('campoStatus').value
             };
 
             // Validação: não aceita nome vazio
@@ -327,7 +444,7 @@
             }
 
             // Redesenha os cartões e fecha o modal
-            renderizarTurmas(campoBusca.value);
+            renderizarTurmas();
             fecharModal();
         });
 
@@ -335,14 +452,9 @@
         function excluirTurma(indice) {
             if (confirm(`Deseja excluir a turma "${listaTurmas[indice].nome}"?`)) {
                 listaTurmas.splice(indice, 1); // Remove do array
-                renderizarTurmas(campoBusca.value); // Redesenha mantendo o filtro
+                renderizarTurmas(); // Redesenha a lista
             }
         }
-
-        // ===== BUSCA EM TEMPO REAL =====
-        campoBusca.addEventListener('input', (e) => {
-            renderizarTurmas(e.target.value);
-        });
 
         // ===== RENDERIZAÇÃO INICIAL =====
         renderizarTurmas();
