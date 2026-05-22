@@ -1,0 +1,7 @@
+{
+  "git.defaultBranchName": "develop",
+  "git.enableSmartCommit": true,
+  "git.confirmSync": true,
+  "git.showPushSuccessNotification": true,
+  "git.branchProtection": ["main"]
+}

@@ -1,0 +1,1511 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background: #f2f3fc;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #1a1c23;
+}
+
+.cabecalho {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.icone-logo {
+    background-color: #e8ebf2;
+    border-radius: 16px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 16px auto;
+}
+
+.icone-logo svg {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.cabecalho h1 {
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: #151920;
+    letter-spacing: -0.5px;
+}
+
+.cabecalho p {
+    font-size: 13px;
+    color: #636b75;
+    font-weight: 600;
+}
+
+.cartao-login {
+    background-color: #fff;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 40px;
+}
+
+.grupo-input {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.grupo-input label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #4a5568;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.linha-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.linha-label label {
+    margin-bottom: 0;
+}
+
+.esqueceu-senha {
+    font-size: 12px;
+    color: #00509d;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.grupo-input input, .grupo-input select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    background-color: #eef2f6;
+    border: 1px solid #eef2f6;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    transition: 0.2s ease;
+    font-weight: 500;
+}
+
+.grupo-input input:focus {
+    border-color: #00509d;
+    background-color: #fff;
+}
+
+.grupo-input input::placeholder {
+    color: #8c96a3;
+}
+
+.btn-entrar {
+    width: 100%;
+    padding: 14px;
+    background-color: #00509d;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+}
+
+.btn-entrar:hover {
+    background-color: #003b75;
+}
+
+.mensagem-erro {
+    background-color: #fff5f5;
+    color: #c53030;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.icone-erro {
+    background-color: #c53030;
+    color: #fff;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.link-cadastro {
+    text-align: center;
+    font-size: 12px;
+    color: #718096;
+    border-top: 1px solid #edf2f7;
+    padding-top: 24px;
+    margin-top: 8px;
+}
+
+.link-cadastro a {
+    color: #00509d;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.rodape {
+    display: flex;
+    gap: 24px;
+    color: #718096;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.rodape span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.rodape span:hover {
+    color: #4a5568;
+}
+
+/* --- DASHBOARD STYLES --- */
+
+/* Sobrescreve flex do body quando é dashboard para que Sidebar e Main fiquem lado a lado */
+.dashboard-body {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+    background: #f8f9fb;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 250px;
+    background-color: #fff;
+    border-right: 1px solid #edf2f7;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 0;
+}
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    margin-bottom: 48px;
+    gap: 12px;
+}
+
+.icone-logo-pequeno {
+    background-color: #00509d;
+    border-radius: 8px;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icone-logo-pequeno svg {
+    width: 22px;
+    height: 22px;
+}
+
+.sidebar-logo-text h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #151920;
+    line-height: 1.1;
+}
+
+.sidebar-logo-text p {
+    font-size: 9px;
+    font-weight: 700;
+    color: #718096;
+    letter-spacing: 0.8px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 12px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 24px;
+    text-decoration: none;
+    color: #718096;
+    font-weight: 600;
+    font-size: 13px;
+    gap: 16px;
+    border-radius: 0 24px 24px 0;
+    margin-right: 24px;
+    transition: 0.2s;
+}
+
+.nav-item.ativo {
+    background-color: #f2f7ff;
+    color: #00509d;
+}
+
+.nav-item:hover:not(.ativo) {
+    background-color: #f7fafc;
+}
+
+.nav-icon {
+    font-size: 18px;
+    min-width: 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-item.ativo .nav-icon {
+    color: #00509d;
+}
+
+.sidebar-footer {
+    padding: 0 24px;
+    margin-top: auto;
+}
+
+.sidebar-footer .nav-item {
+    margin-right: 0;
+    border-radius: 8px;
+    padding: 12px 16px;
+}
+
+/* HAMBURGUER MENU (MOBILE) */
+.hamburger-btn {
+    display: none; /* Oculto em telas grandes (Desktop) */
+    flex-direction: column;
+    gap: 5px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 10;
+    outline: none;
+}
+
+/* Os três traços do botão de menu */
+.hamburger-btn span {
+    width: 24px;
+    height: 3px;
+    background: #00509d;
+    border-radius: 2px;
+    transition: 0.3s; /* Anima o risco visual suavemente */
+}
+
+/* Quando o botão recebe('.active'), ele vira um 'X' */
+.hamburger-btn.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-btn.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* MAIN CONTENT */
+.dashboard-main {
+    flex-grow: 1;
+    padding: 32px 48px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* HEADER DA DASHBOARD */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-greeting {
+    font-weight: 700;
+    color: #1a1c23;
+    font-size: 14px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 16px;
+}
+
+.icon-button {
+    background: transparent;
+    border: none;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #718096;
+    font-size: 18px;
+    cursor: pointer;
+    position: relative;
+}
+
+.icon-button .badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 8px;
+    height: 8px;
+    background-color: #e53e3e;
+    border-radius: 50%;
+    border: 2px solid #f8f9fb;
+}
+
+/* CARTOES METRICOS NO TOPO */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.metric-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.borda-inferior-azul {
+    border-bottom: 4px solid #00509d;
+    padding-bottom: 20px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.cartao-perigo {
+    background: #fff5f5;
+}
+
+.metric-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.metric-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.metric-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+}
+
+.fundo-verde {
+    background: #e6fffa;
+    color: #234e45;
+}
+
+.fundo-azul {
+    background: #00509d;
+    color: #fff;
+}
+
+.fundo-azul-claro {
+    background: #eef4ff;
+    color: #00509d;
+}
+
+.fundo-vermelho {
+    background: #ffe3e3;
+    color: #c53030;
+}
+
+.texto-vermelho {
+    color: #c53030;
+}
+
+.metric-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: #1a1c23;
+    letter-spacing: -1px;
+}
+
+
+
+/* SECAO DE GRAFICOS CENTRAIS */
+.charts-row {
+    display: flex;
+    gap: 24px;
+}
+
+.chart-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-grow {
+    flex-grow: 1;
+}
+
+.narrow-card {
+    width: 320px;
+}
+
+.chart-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.chart-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1c23;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+}
+
+.chart-card p {
+    font-size: 13px;
+    color: #718096;
+}
+
+.btn-primary {
+    background: #00509d;
+    color: #fff;
+    border: none;
+    padding: 9.5px 20px;
+    margin-left: 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-primary:hover {
+    background: #003b75;
+}
+
+.chart-placeholder {
+    flex-grow: 1;
+    min-height: 250px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    padding-top: 40px;
+}
+
+.chart-labels-bottom {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    font-size: 9px;
+    font-weight: 800;
+    color: #4a5568;
+}
+
+.circular-chart-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    min-height: 200px;
+    margin-top: 16px;
+}
+
+.circle-chart {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 16px solid #e2e8f0;
+    border-top-color: #00509d;
+    border-right-color: #00509d;
+    border-bottom-color: #00509d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circle-value {
+    text-align: center;
+}
+
+.circle-value h2 {
+    font-size: 32px;
+    font-weight: 800;
+    color: #1a1c23;
+    letter-spacing: -1px;
+}
+
+.circle-value span {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    color: #4a5568;
+    letter-spacing: 0.5px;
+}
+
+.legenda-grafico {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 8px;
+}
+
+
+/* TABELAS */
+.table-section {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.table-header-custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.table-header-custom h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1c23;
+}
+
+.legenda-status {
+    display: flex;
+    gap: 16px;
+}
+
+.item-legenda {
+    font-size: 12px;
+    color: #4a5568;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ponto {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.ponto-verde {
+    background: #38a169;
+}
+
+.ponto-amarelo {
+    background: #ecc94b;
+}
+
+.ponto-vermelho {
+    background: #e53e3e;
+}
+
+.ponto-azul {
+    background: #00509d;
+}
+
+.ponto-cinza {
+    background: #e2e8f0;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+thead {
+    background: #f7fafc;
+}
+
+th {
+    text-align: left;
+    padding: 16px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #718096;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+th:first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+th:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+td {
+    padding: 20px 16px;
+    border-bottom: 1px solid #edf2f7;
+    font-size: 14px;
+    color: #4a5568;
+}
+
+td strong {
+    color: #1a1c23;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+.info-aluno {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.iniciais-nome {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.fundo-azul-claro {
+    background: #eef4ff;
+}
+
+.texto-azul-escuro {
+    color: #00509d;
+}
+
+.fundo-cinza-claro {
+    background: #f7fafc;
+}
+
+.texto-cinza-escuro {
+    color: #4a5568;
+}
+
+.nome-aluno {
+    font-weight: 700;
+    color: #1a1c23;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    color: #00509d;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.fab-btn {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #00509d;
+    color: #fff;
+    font-size: 24px;
+    border: none;
+    box-shadow: 0 4px 16px rgba(0, 80, 157, 0.4);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+.fab-btn:hover {
+    transform: scale(1.05);
+}
+
+/* --- ESTILOS DO MODAL (CRIAR TURMA) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(21, 25, 32, 0.4);
+    backdrop-filter: blur(3px); /* Fundo embaçadinho em pt-br */
+    display: none; /* Só mostra quando for ativado pelo celular */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-overlay.ativo {
+    display: flex;
+}
+
+.modal-container {
+    background: #fff;
+    width: 100%;
+    max-width: 440px;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    animation: deslizaModal 0.3s ease;
+}
+
+/* Anima a transição da gaveta para ficar agradável */
+@keyframes deslizaModal {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.modal-header h2 {
+    font-size: 18px;
+    font-weight: 800;
+    color: #1a1c23;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+}
+
+.modal-header p {
+    font-size: 12px;
+    color: #718096;
+    font-weight: 500;
+}
+
+.fechar-modal {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: #718096;
+    cursor: pointer;
+    line-height: 1;
+    transition: 0.2s;
+    padding: 4px; /* Aumenta a zona para tocar com os dedos */
+}
+
+.fechar-modal:hover {
+    color: #c53030; /* Fica avermelhado ao passar o cursor */
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}    
+
+/* Garante que os containers internos não possuam espaços além do devido */
+.class-margin-0 {
+    margin-bottom: 0 !important;
+}
+
+/* Ajustes no select dropdown nativo para encaixar no padrão de cor premium */
+.modal-form select {
+    padding: 14px 16px;
+    background-color: #eef2f6; 
+    border: 1px solid #eef2f6;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    width: 100%;
+    appearance: none; /* Desliga a setinha feia nativa do windows/mac */
+    cursor: pointer;
+    font-weight: 500;
+    /* Imagem base64 pura para injetar uma estinha sob medida */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='%23718096' d='M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6l-6-6l1.41-1.41z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+}
+
+.modal-form select:focus {
+    border-color: #00509d;
+    background-color: #fff;
+}
+
+.input-linha-dupla {
+    display: flex;
+    gap: 16px;
+}
+
+.input-linha-dupla .grupo-input {
+    flex: 1; /* Ocupam ambos a mesma fatia dos lados */
+}
+
+.input-com-icone {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-com-icone input {
+    width: 100%;
+}
+
+.icone-calendario {
+    position: absolute;
+    right: 14px;
+    color: #718096;
+    font-size: 18px;
+    display: flex;
+    pointer-events: none; /* Para não bloquear cliques passando no ícone */
+}
+
+/* Rodapé final dos botões de aprovar/negar a turma*/
+.modal-rodape {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.btn-secundario {
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    color: #4a5568;
+    cursor: pointer;
+    padding: 10px 16px;
+}
+
+.btn-secundario:hover {
+    color: #1a1c23;
+}
+
+.botao-primario {
+    background: #00509d;
+    color: #fff;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.botao-primario:hover {
+    background: #003b75;
+}
+
+/* --- ESTILOS DA PÁGINA DE TURMAS --- */
+
+/* Barra de pesquisa no topo */
+.barra-pesquisa {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #edf2f7;
+    border-radius: 10px;
+    padding: 10px 16px;
+    gap: 10px;
+    flex-grow: 1; /* Ocupa todo o espaço disponível no cabeçalho */
+    max-width: 480px;
+}
+
+/* Ícone da lupa dentro da barra */
+.icone-busca {
+    font-size: 14px;
+    color: #718096;
+}
+
+/* Campo de texto da busca */
+.barra-pesquisa input {
+    border: none;
+    outline: none;
+    font-size: 13px;
+    color: #1a1c23;
+    width: 100%;
+    background: transparent;
+    font-weight: 500;
+}
+
+/* Placeholder cinza suave */
+.barra-pesquisa input::placeholder {
+    color: #a0aec0;
+}
+
+/* Título e subtítulo da página */
+.titulo-pagina {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Quebra em telas menores */
+    gap: 16px;
+}
+
+/* Título grande */
+.titulo-pagina h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #1a1c23;
+    letter-spacing: -0.5px;
+}
+
+/* Subtítulo descritivo da página */
+.titulo-pagina p {
+    font-size: 13px;
+    color: #718096;
+    margin-top: 4px;
+}
+
+/* Botão "+ Nova Turma" no canto do título */
+.btn-nova-turma {
+    background: #00509d;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-nova-turma:hover {
+    background: #003b75;
+    transform: translateY(-1px); /* Efeito micro de elevação */
+}
+
+/* Grade de cartões de turmas (2 colunas no desktop) */
+.grade-turmas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+/* Cartão individual de turma */
+.cartao-turma {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden; /* Corta a faixa colorida no topo */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Leve elevação ao passar o mouse */
+.cartao-turma:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Faixa colorida no topo do cartão */
+.cartao-turma-topo {
+    padding: 20px 24px;
+    color: #fff;
+}
+
+.cartao-turma-topo h3 {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    letter-spacing: -0.3px;
+}
+
+/* Etiqueta de série (ex: Fundamental II) */
+.turma-serie {
+    font-size: 11px;
+    font-weight: 600;
+    opacity: 0.85;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Cores diferentes para cada faixa de turma */
+.faixa-azul { background: linear-gradient(135deg, #00509d, #0066cc); }
+.faixa-verde { background: linear-gradient(135deg, #2b8a3e, #38a169); }
+.faixa-laranja { background: linear-gradient(135deg, #e8590c, #f76707); }
+.faixa-roxa { background: linear-gradient(135deg, #6741d9, #845ef7); }
+
+/* Corpo do cartão com informações em linhas */
+.cartao-turma-corpo {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Linha individual de informação */
+.turma-info-linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+}
+
+/* Rótulo cinza no lado esquerdo (ex: "Alunos") */
+.turma-label {
+    color: #718096;
+    font-weight: 500;
+}
+
+/* Valor em negrito no lado direito */
+.turma-info-linha strong {
+    color: #1a1c23;
+    font-weight: 700;
+}
+
+/* Rodapé do cartão (botões editar/excluir) */
+.cartao-turma-rodape {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 24px;
+    border-top: 1px solid #edf2f7;
+}
+
+/* Botão de editar turma */
+.btn-editar {
+    background: transparent;
+    border: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: #00509d;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+.btn-editar:hover {
+    background: #f2f7ff;
+}
+
+/* Botão X para excluir turma */
+.btn-excluir {
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    color: #c53030;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s;
+}
+
+.btn-excluir:hover {
+    background: #fff5f5;
+}
+
+/* Retira margem inferior do grupo-input dentro do modal */
+.sem-margem {
+    margin-bottom: 0 !important;
+}
+
+/* Botão "Cancelar" do modal */
+.btn-cancelar {
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    color: #4a5568;
+    cursor: pointer;
+    padding: 10px 16px;
+}
+
+.btn-cancelar:hover {
+    color: #1a1c23;
+}
+
+/* Botão "Salvar Turma" azul do modal */
+.btn-salvar-turma {
+    background: #00509d;
+    color: #fff;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-salvar-turma:hover {
+    background: #003b75;
+}
+
+/* --- MELHORIAS DO CARTÃO DE TURMA --- */
+
+/* Borda lateral refletindo status */
+.cartao-turma.status-border-vermelho { border-left: 4px solid #e53e3e; }
+.cartao-turma.status-border-amarelo { border-left: 4px solid #ecc94b; }
+.cartao-turma.status-border-verde { border-left: 4px solid #38a169; }
+
+.cartao-turma {
+    border-left: 4px solid #e2e8f0; /* Default */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Flex do cabeçalho original */
+.turma-header-superior {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* Badge de pendências/status */
+.badge-pendencia {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 12px;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.badge-pendencia.alerta-vermelho { background-color: #e53e3e; }
+.badge-pendencia.alerta-amarelo { background-color: #ecc94b; color: #744210; }
+.badge-pendencia.alerta-verde { background-color: #38a169; }
+
+/* Remove o padding interno do corpo original para dar lugar 
+à quebra interna sem machucar o layout fixo superior */
+.cartao-turma-corpo.novo-corpo {
+    padding: 0; 
+}
+
+/* Informações básicas lado a lado */
+.turma-info-basica {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background-color: #f7fafc;
+    border-bottom: 1px solid #edf2f7;
+    font-size: 12px;
+    color: #4a5568;
+    font-weight: 600;
+}
+.turma-icone {
+    margin-right: 4px;
+    font-size: 13px;
+}
+
+/* Nova seção de conteúdos com espaçamento elegante */
+.turma-conteudos {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex-grow: 1;
+}
+.conteudo-item small {
+    display: block;
+    font-size: 9px;
+    font-weight: 800;
+    color: #a0aec0;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+.conteudo-item p {
+    font-size: 13px;
+    color: #1a1c23;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* Botões de Ação Rápida alinhados e interativos */
+.cartao-turma-botoes-acao {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-top: 1px dashed #e2e8f0;
+    gap: 8px;
+    background-color: #fff;
+}
+.btn-acao-rapida {
+    flex-grow: 1;
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    color: #4a5568;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 6px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn-acao-rapida:hover {
+    background: #edf2f7;
+    color: #00509d;
+    border-color: #cbd5e0;
+}
+
+/* --- INÍCIO: REGRAS DE RESPONSIVIDADE (Telas Menores) --- */
+@media (max-width: 768px) {
+
+    /* Muda o layout principal para coluna (sidebar em cima, conteúdo embaixo) */
+    .dashboard-body {
+        flex-direction: column;
+    }
+
+    /* Sidebar ocupa 100% da largura no mobile */
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #edf2f7;
+        padding: 24px 0;
+    }
+
+    /* Mostra o botão hambúrguer no mobile */
+    .hamburger-btn {
+        display: flex;
+    }
+
+    /* Logo e hambúrguer ficam nos lados opostos */
+    .sidebar-logo {
+        justify-content: space-between;
+        margin-bottom: 0;
+        padding: 0 24px;
+    }
+
+    /* Menu começa escondido, só aparece quando .open é adicionado */
+    .sidebar-nav {
+        display: none;
+        margin-top: 24px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        padding: 0 16px;
+    }
+
+    /* Quando o hambúrguer é clicado, o JS adiciona .open e o menu aparece */
+    .sidebar-nav.open {
+        display: grid;
+    }
+
+    /* Remove a margem lateral dos itens para caber na grade */
+    .nav-item {
+        margin-right: 0;
+        border-radius: 8px;
+        justify-content: flex-start;
+        padding: 12px 16px;
+    }
+
+    /* Rodapé da sidebar começa escondido também */
+    .sidebar-footer {
+        display: none;
+        margin-top: 16px;
+        padding: 0 16px;
+    }
+
+    /* Aparece junto com o menu quando .open é ativado */
+    .sidebar-footer.open {
+        display: block;
+    }
+
+    /* Reduz o padding geral do conteúdo principal */
+    .dashboard-main {
+        padding: 16px;
+        gap: 24px;
+    }
+
+    /* Cabeçalho permite quebra de linha */
+    .dashboard-header {
+        flex-wrap: wrap;
+        gap: 16px;
+        justify-content: space-between;
+    }
+
+    /* === RESPONSIVIDADE DO DASHBOARD === */
+
+    /* Duas métricas por linha em tablets */
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    /* Gráficos empilhados */
+    .charts-row {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .narrow-card {
+        width: 100%;
+    }
+
+    /* Botão do gráfico empilha embaixo do título */
+    .chart-header-flex {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+    }
+
+    .chart-header-flex .btn-primary {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    /* Tabela com rolagem horizontal */
+    .table-container {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 600px;
+    }
+
+    /* Botão flutuante mais perto da borda */
+    .fab-btn {
+        bottom: 16px;
+        right: 16px;
+    }
+
+    /* === RESPONSIVIDADE DA PÁGINA DE TURMAS === */
+
+    /* Título e botão empilham verticalmente */
+    .titulo-pagina {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /* Botão Nova Turma ocupa toda a largura */
+    .btn-nova-turma {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Cartões de turma em coluna única */
+    .grade-turmas {
+        grid-template-columns: 1fr;
+    }
+
+    /* Barra de pesquisa ocupa toda a largura */
+    .barra-pesquisa {
+        max-width: 100%;
+    }
+
+    /* Modal se ajusta às bordas da tela */
+    .modal-container {
+        margin: 16px;
+        padding: 24px;
+    }
+
+    /* Campos duplos do modal empilham no celular */
+    .input-linha-dupla {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+/* Telas bem pequenas (celulares em pé) */
+@media (max-width: 480px) {
+
+    /* Uma métrica por linha */
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Menu da sidebar em coluna única */
+    .sidebar-nav {
+        grid-template-columns: 1fr;
+    }
+
+    /* Título da página de turmas menor */
+    .titulo-pagina h1 {
+        font-size: 22px;
+    }
+
+    /* Rodapé do cartão empilha os botões */
+    .cartao-turma-rodape {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    /* Botão editar ocupa largura total */
+    .cartao-turma-rodape .btn-editar {
+        width: 100%;
+        text-align: center;
+    }
+}
+/* --- FIM: REGRAS DE RESPONSIVIDADE --- */
+
