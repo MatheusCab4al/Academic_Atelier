@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel - Academic Atelier</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* ===== GRÁFICO DE BARRAS ===== */
+        .chart-placeholder {
+            flex-grow: 1;
+            min-height: 220px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding-top: 16px;
+            gap: 12px;
+            position: relative;
+        }
+
+        .chart-bar-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .chart-bar-wrap {
+            width: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            height: 160px;
+        }
+
+        .chart-bar {
+            width: 60%;
+            max-width: 48px;
+            background: linear-gradient(180deg, #00509d, #0066cc);
+            border-radius: 6px 6px 0 0;
+            height: 0;
+            transition: height 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .chart-bar:hover {
+            filter: brightness(1.15);
+        }
+
+        .chart-bar .bar-tooltip {
+            position: absolute;
+            top: -32px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1c23;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 6px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .chart-bar:hover .bar-tooltip {
+            opacity: 1;
+        }
+
+        .chart-bar-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: #718096;
+            text-align: center;
+        }
+
+        /* Linha de grade horizontal */
+        .chart-grid-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            border-top: 1px dashed #edf2f7;
+        }
+
+        /* ===== GRÁFICO CIRCULAR ===== */
+        .circle-chart {
+            position: relative;
+        }
+
+        .circle-chart svg {
+            transform: rotate(-90deg);
+        }
+
+        .circle-chart-track {
+            fill: none;
+            stroke: #e2e8f0;
+            stroke-width: 16;
+        }
+
+        .circle-chart-fill {
+            fill: none;
+            stroke: url(#gradCircle);
+            stroke-width: 16;
+            stroke-linecap: round;
+            stroke-dasharray: 502;
+            stroke-dashoffset: 502;
+            transition: stroke-dashoffset 1.4s cubic-bezier(0.34, 1.2, 0.64, 1);
+        }
+
+        .circle-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .circle-value h2 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1a1c23;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        .circle-value span {
+            display: block;
+            font-size: 9px;
+            font-weight: 800;
+            color: #718096;
+            letter-spacing: 0.8px;
+            margin-top: 2px;
+        }
+
+        .circular-chart-placeholder {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            min-height: 200px;
+            margin-top: 16px;
+        }
+
+        /* ===== ANIMAÇÃO DOS CONTADORES ===== */
+        .metric-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: #1a1c23;
+            letter-spacing: -1px;
+        }
+
+        /* ===== TOAST NOTIFICATION ===== */
+        .toast-container {
+            position: fixed;
+            bottom: 100px;
+            right: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: #1a1c23;
+            color: #fff;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 280px;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* ===== PAINEL DE NOTIFICAÇÕES ===== */
+        .notif-panel {
+            position: fixed;
+            top: 0;
+            right: -380px;
+            width: 360px;
+            height: 100vh;
+            background: #fff;
+            box-shadow: -4px 0 24px rgba(0,0,0,0.1);
+            z-index: 2000;
+            padding: 32px 24px;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .notif-panel.aberto {
+            right: 0;
+        }
+
+        .notif-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .notif-panel-header h3 {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1a1c23;
+        }
+
+        .notif-fechar {
+            background: transparent;
+            border: none;
+            font-size: 22px;
+            color: #718096;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .notif-fechar:hover { color: #c53030; }
+
+        .notif-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px 0;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .notif-icone {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 17px;
+            flex-shrink: 0;
+        }
+
+        .notif-texto p {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1a1c23;
+            line-height: 1.4;
+        }
+
+        .notif-texto small {
+            font-size: 11px;
+            color: #a0aec0;
+            margin-top: 3px;
+            display: block;
+        }
+
+        .overlay-notif {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 1999;
+        }
+
+        .overlay-notif.ativo { display: block; }
+
+        /* ===== MODAL FAB ===== */
+        .fab-menu {
+            position: fixed;
+            bottom: 100px;
+            right: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+            transition: all 0.25s ease;
+        }
+
+        .fab-menu.aberto {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .fab-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .fab-item-label {
+            background: #1a1c23;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 8px;
+            white-space: nowrap;
+        }
+
+        .fab-item-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .fab-item-btn:hover { transform: scale(1.1); }
+
+        .fab-btn {
+            transition: transform 0.3s ease, background 0.2s;
+        }
+
+        .fab-btn.rotacionado {
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+
+<body class="dashboard-body">
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="icone-logo-pequeno">
+                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.000000 512.000000"
+                    preserveAspectRatio="xMidYMid meet">
+                    <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#fff" stroke="none">
+                        <path
+                            d="M2450 4251 c-447 -183 -2060 -865 -2080 -879 -14 -11 -32 -38 -40 -60 -13 -37 -13 -47 0 -84 8 -22 26 -49 40 -60 14 -10 500 -219 1080 -464 797 -337 1067 -447 1105 -451 47 -4 97 16 898 355 l847 359 0 -527 0 -528 -30 -12 c-108 -45 -174 -261 -121 -399 l18 -49 -58 -263 c-33 -144 -59 -273 -59 -286 0 -29 42 -73 69 -73 11 0 52 17 92 37 62 33 83 38 151 42 83 3 144 -12 200 -51 14 -10 40 -21 57 -24 25 -5 36 -1 61 24 16 17 30 37 30 45 0 8 -34 136 -76 283 l-76 268 16 46 c10 27 16 76 16 122 0 102 -28 178 -86 237 l-44 44 0 566 0 566 140 59 c148 62 182 87 195 146 10 44 -3 86 -34 118 -27 26 -137 73 -1844 794 -180 76 -338 138 -350 138 -12 0 -65 -18 -117 -39z" />
+                        <path
+                            d="M1202 2208 c3 -411 4 -424 25 -463 29 -54 62 -83 168 -150 244 -154 545 -263 855 -312 157 -24 461 -24 620 1 249 39 479 110 690 216 229 114 306 171 346 255 l24 50 0 414 c0 389 -1 413 -17 408 -10 -2 -297 -123 -638 -268 l-620 -264 -90 0 -90 0 -629 268 c-346 147 -633 267 -638 267 -5 0 -8 -184 -6 -422z" />
+                    </g>
+                </svg>
+            </div>
+            <div class="sidebar-logo-text">
+                <h2>The Atelier</h2>
+                <p>EDUCAÇÃO ESPECIALIZADA</p>
+            </div>
+            <button class="hamburger-btn" id="btnMenu" aria-label="Abrir ou fechar menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav" id="menuNavegacao">
+            <a href="dashboard.html" class="nav-item ativo" id="nav-painel">
+                <span class="nav-icon">⊞</span> Painel Principal
+            </a>
+            <a href="turmas.html" class="nav-item" id="nav-turmas">
+                <span class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 2304 1536">
+                        <path fill="currentColor"
+                            d="m1774 708l18 316q4 69-82 128t-235 93.5t-323 34.5t-323-34.5t-235-93.5t-82-128l18-316l574 181q22 7 48 7t48-7zm530-324q0 23-22 31L1162 767q-4 1-10 1t-10-1L490 561q-43 34-71 111.5T385 851q63 36 63 109q0 69-58 107l58 433q2 14-8 25q-9 11-24 11H224q-15 0-24-11q-10-11-8-25l58-433q-58-38-58-107q0-73 65-111q11-207 98-330L22 415q-22-8-22-31t22-31L1142 1q4-1 10-1t10 1l1120 352q22 8 22 31z" />
+                    </svg>
+                </span> Turmas
+            </a>
+            <a href="#" class="nav-item" id="nav-alunos">
+                <span class="nav-icon">👥</span> Alunos
+            </a>
+            <a href="#" class="nav-item" id="nav-planos">
+                <span class="nav-icon">📖</span> Planos de Aula
+            </a>
+        </nav>
+
+        <div class="sidebar-footer" id="rodapeNavegacao">
+            <a href="#" onclick="logout(event)" class="nav-item logout" id="btn-logout">
+                <span class="nav-icon">↪</span> Sair
+            </a>
+        </div>
+    </aside>
+
+    <main class="dashboard-main">
+        <header class="dashboard-header">
+            <div class="user-info">
+                <img id="avatarImg" src="" alt="Foto do perfil" class="avatar">
+                <span class="user-greeting" id="saudacaoUsuario">Olá, Professor</span>
+            </div>
+            <div class="header-actions">
+                <button class="icon-button notification-btn" id="btnNotificacao" title="Notificações" aria-label="Abrir notificações">
+                    <span class="badge" id="badgeNotificacao"></span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                </button>
+                <button class="icon-button" id="btnAjuda" title="Ajuda" aria-label="Ajuda">?</button>
+            </div>
+        </header>
+
+        <!-- CARTÕES DO TOPO -->
+        <section class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-title">Total de alunos</span>
+                    <div class="metric-icon fundo-verde">👥</div>
+                </div>
+                <h3 class="metric-value" id="totalAlunos">0</h3>
+            </div>
+
+            <div class="metric-card borda-inferior-azul">
+                <div class="metric-header">
+                    <span class="metric-title">Total de turmas</span>
+                    <div class="metric-icon fundo-azul">📘</div>
+                </div>
+                <h3 class="metric-value" id="totalTurmas">0</h3>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-title">Média geral da escola</span>
+                    <div class="metric-icon fundo-azul-claro">📈</div>
+                </div>
+                <h3 class="metric-value" id="mediaGeral">0</h3>
+            </div>
+
+            <div class="metric-card cartao-perigo">
+                <div class="metric-header">
+                    <span class="metric-title">Alunos em risco</span>
+                    <div class="metric-icon fundo-vermelho">⚠️</div>
+                </div>
+                <h3 class="metric-value texto-vermelho" id="alunosRisco">0</h3>
+            </div>
+        </section>
+
+        <!-- GRÁFICOS -->
+        <section class="charts-row">
+            <!-- Gráfico de barras -->
+            <div class="chart-card" style="flex: 1;">
+                <div class="chart-header-flex">
+                    <div>
+                        <h3>Performance por Turma</h3>
+                        <p>Média de notas do último bimestre</p>
+                    </div>
+                    <button class="btn-primary" onclick="window.location.href='turmas.html'">Ver todas as turmas</button>
+                </div>
+                <div class="chart-placeholder" id="graficoBarras">
+                    <!-- Gerado via JS -->
+                </div>
+            </div>
+
+            <!-- Gráfico circular -->
+            <div class="chart-card" style="width: 280px; flex-shrink: 0;">
+                <h3>Frequência Geral</h3>
+                <p>Presença consolidada</p>
+
+                <div class="circular-chart-placeholder">
+                    <div class="circle-chart" style="width:180px;height:180px;position:relative;">
+                        <svg width="180" height="180" viewBox="0 0 180 180">
+                            <defs>
+                                <linearGradient id="gradCircle" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#00509d;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#0066cc;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <circle class="circle-chart-track" cx="90" cy="90" r="80" />
+                            <circle class="circle-chart-fill" id="arcFrequencia" cx="90" cy="90" r="80" />
+                        </svg>
+                        <div class="circle-value">
+                            <h2 id="valorFrequencia">0%</h2>
+                            <span>PRESENTES</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="legenda-grafico">
+                    <span class="item-legenda"><span class="ponto ponto-azul"></span> Presença</span>
+                    <span class="item-legenda"><span class="ponto ponto-cinza"></span> Faltas</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- TABELA INFERIOR -->
+        <section class="table-section">
+            <div class="table-header-custom">
+                <h3>Semáforo de Desempenho</h3>
+                <div class="legenda-status">
+                    <span class="item-legenda"><span class="ponto ponto-verde"></span> Estável</span>
+                    <span class="item-legenda"><span class="ponto ponto-amarelo"></span> Atenção</span>
+                    <span class="item-legenda"><span class="ponto ponto-vermelho"></span> Crítico</span>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table id="tabelaAlunos">
+                    <thead>
+                        <tr>
+                            <th>ESTUDANTE</th>
+                            <th>STATUS</th>
+                            <th>TURMA</th>
+                            <th>MÉDIA ATUAL</th>
+                            <th>AÇÃO</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoTabelaAlunos">
+                        <!-- Preenchido via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- FAB Menu -->
+    <div class="fab-menu" id="fabMenu">
+        <div class="fab-item">
+            <span class="fab-item-label">Nova Turma</span>
+            <button class="fab-item-btn" id="fabNovaTurma" style="background: #0066cc; color: #fff;" onclick="window.location.href='turmas.html'" aria-label="Nova Turma">📘</button>
+        </div>
+        <div class="fab-item">
+            <span class="fab-item-label">Novo Aluno</span>
+            <button class="fab-item-btn" id="fabNovoAluno" style="background: #38a169; color: #fff;" onclick="mostrarToast('⚙️ Módulo em desenvolvimento')" aria-label="Novo Aluno">👤</button>
+        </div>
+    </div>
+
+    <button class="fab-btn" id="fabBtn" aria-label="Ações rápidas">+</button>
+
+    <!-- Painel de Notificações -->
+    <div class="overlay-notif" id="overlayNotif"></div>
+    <div class="notif-panel" id="painelNotif">
+        <div class="notif-panel-header">
+            <h3>Notificações</h3>
+            <button class="notif-fechar" id="fecharNotif" aria-label="Fechar notificações">✕</button>
+        </div>
+        <div id="listaNotificacoes">
+            <!-- Preenchido via JS -->
+        </div>
+    </div>
+
+    <!-- Container de Toasts -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // ================================
+        // DADOS MOCK (substituir por API)
+        // ================================
+        const DADOS = {
+            metricas: {
+                totalAlunos: 187,
+                totalTurmas: 6,
+                mediaGeral: 7.4,
+                alunosRisco: 42,
+                frequenciaGeral: 87
+            },
+            turmas: [
+                { nome: "7º Ano A", media: 8.1 },
+                { nome: "7º Ano B", media: 6.9 },
+                { nome: "8º Ano A", media: 7.5 },
+                { nome: "9º Ano C", media: 9.0 },
+                { nome: "EM 1º",   media: 5.8 },
+                { nome: "EM 2º",   media: 7.2 }
+            ],
+            alunos: [
+                { nome: "Ana Maria Oliveira",   turma: "9º Ano C",  media: 9.5, status: "verde" },
+                { nome: "João Silva Santos",    turma: "8º Ano A",  media: 6.8, status: "amarelo" },
+                { nome: "Ricardo Carvalho",     turma: "EM 1º Ano", media: 4.2, status: "vermelho" },
+                { nome: "Fernanda Costa",       turma: "7º Ano A",  media: 8.7, status: "verde" },
+                { nome: "Lucas Pereira",        turma: "EM 1º Ano", media: 3.9, status: "vermelho" },
+                { nome: "Mariana Souza",        turma: "7º Ano B",  media: 6.1, status: "amarelo" }
+            ],
+            notificacoes: [
+                { icone: "⚠️", fundo: "#fff5f5",  texto: "Ricardo Carvalho está com média 4.2 — abaixo do mínimo.",  tempo: "Agora mesmo" },
+                { icone: "📋", fundo: "#f0fff4",  texto: "Plano de aula do 8º A aguarda revisão.",                   tempo: "Há 30 min" },
+                { icone: "👤", fundo: "#eef4ff",  texto: "2 novos alunos adicionados à turma 7º B.",                 tempo: "Há 2 horas" },
+                { icone: "📊", fundo: "#fffbeb",  texto: "Relatório do bimestre disponível para download.",          tempo: "Ontem" }
+            ]
+        };
+
+        // ================================
+        // UTILITÁRIOS
+        // ================================
+        function obterIniciais(nome) {
+            return nome.trim().split(" ").slice(0, 2).map(p => p[0].toUpperCase()).join("");
+        }
+
+        function corPorStatus(status) {
+            return { verde: "#38a169", amarelo: "#ecc94b", vermelho: "#e53e3e" }[status] || "#a0aec0";
+        }
+
+        // ================================
+        // TOASTS
+        // ================================
+        function mostrarToast(msg, icone = "ℹ️") {
+            const container = document.getElementById("toastContainer");
+            const t = document.createElement("div");
+            t.className = "toast";
+            t.innerHTML = `<span>${icone}</span> ${msg}`;
+            container.appendChild(t);
+            requestAnimationFrame(() => t.classList.add("show"));
+            setTimeout(() => {
+                t.classList.remove("show");
+                setTimeout(() => t.remove(), 350);
+            }, 3200);
+        }
+
+        // ================================
+        // SAUDAÇÃO DINÂMICA + AVATAR
+        // ================================
+        function configurarUsuario() {
+            const hora = new Date().getHours();
+            let saudacao = hora < 12 ? "Bom dia" : hora < 18 ? "Boa tarde" : "Boa noite";
+
+            // Tenta ler o nome salvo no login (localStorage)
+            const nome = localStorage.getItem("nomeUsuario") || "Professor";
+            const nomeExibido = `${saudacao}, ${nome}`;
+
+            document.getElementById("saudacaoUsuario").textContent = nomeExibido;
+
+            // Avatar dinâmico via ui-avatars com as iniciais
+            const primeiroNome = nome.split(" ")[0];
+            document.getElementById("avatarImg").src =
+                `https://ui-avatars.com/api/?name=${encodeURIComponent(nome)}&background=00509d&color=fff&size=80`;
+        }
+
+        // ================================
+        // CONTADOR ANIMADO
+        // ================================
+        function animarContador(elemento, alvo, decimais = 0, sufixo = "") {
+            let inicio = 0;
+            const duracao = 1200;
+            const intervalo = 16;
+            const passos = duracao / intervalo;
+            const incremento = alvo / passos;
+
+            const timer = setInterval(() => {
+                inicio += incremento;
+                if (inicio >= alvo) {
+                    inicio = alvo;
+                    clearInterval(timer);
+                }
+                elemento.textContent = inicio.toFixed(decimais) + sufixo;
+            }, intervalo);
+        }
+
+        // ================================
+        // MÉTRICAS
+        // ================================
+        function carregarMetricas() {
+            const m = DADOS.metricas;
+            animarContador(document.getElementById("totalAlunos"), m.totalAlunos);
+            animarContador(document.getElementById("totalTurmas"), m.totalTurmas);
+            animarContador(document.getElementById("mediaGeral"), m.mediaGeral, 1);
+            animarContador(document.getElementById("alunosRisco"), m.alunosRisco);
+        }
+
+        // ================================
+        // GRÁFICO DE BARRAS
+        // ================================
+        function renderizarGraficoBarras() {
+            const container = document.getElementById("graficoBarras");
+            container.innerHTML = "";
+
+            const alturaMax = 160;
+            const maxMedia = 10;
+
+            // Linhas de grade
+            [2.5, 5, 7.5, 10].forEach((valor, i) => {
+                const linha = document.createElement("div");
+                linha.className = "chart-grid-line";
+                linha.style.bottom = (valor / maxMedia * alturaMax + 24) + "px";
+                container.appendChild(linha);
+            });
+
+            DADOS.turmas.forEach(t => {
+                const alturaPx = (t.media / maxMedia) * alturaMax;
+                const cor = t.media >= 7.5 ? "linear-gradient(180deg,#38a169,#48bb78)"
+                          : t.media >= 5   ? "linear-gradient(180deg,#d69e2e,#ecc94b)"
+                                           : "linear-gradient(180deg,#c53030,#e53e3e)";
+
+                const grupo = document.createElement("div");
+                grupo.className = "chart-bar-group";
+                grupo.innerHTML = `
+                    <div class="chart-bar-wrap">
+                        <div class="chart-bar" style="background:${cor};" data-alvo="${alturaPx}">
+                            <div class="bar-tooltip">Média: ${t.media.toFixed(1)}</div>
+                        </div>
+                    </div>
+                    <span class="chart-bar-label">${t.nome}</span>
+                `;
+                container.appendChild(grupo);
+            });
+
+            // Anima as barras com atraso
+            requestAnimationFrame(() => {
+                document.querySelectorAll(".chart-bar").forEach((bar, i) => {
+                    const alvo = bar.dataset.alvo;
+                    setTimeout(() => { bar.style.height = alvo + "px"; }, i * 80);
+                });
+            });
+        }
+
+        // ================================
+        // GRÁFICO CIRCULAR
+        // ================================
+        function renderizarGraficoCircular() {
+            const freq = DADOS.metricas.frequenciaGeral;
+            const circunferencia = 2 * Math.PI * 80; // r=80 → ≈ 502.65
+            const offset = circunferencia * (1 - freq / 100);
+
+            setTimeout(() => {
+                document.getElementById("arcFrequencia").style.strokeDashoffset = offset;
+                animarContador(document.getElementById("valorFrequencia"), freq, 0, "%");
+            }, 300);
+        }
+
+        // ================================
+        // TABELA DE ALUNOS
+        // ================================
+        function renderizarTabela() {
+            const tbody = document.getElementById("corpoTabelaAlunos");
+            tbody.innerHTML = "";
+
+            DADOS.alunos.forEach((aluno, i) => {
+                const iniciais = obterIniciais(aluno.nome);
+                const corStatus = corPorStatus(aluno.status);
+                const fundoIniciais = aluno.status === "vermelho" ? "#fff5f5" : aluno.status === "amarelo" ? "#fffbeb" : "#eef4ff";
+                const corIniciais  = aluno.status === "vermelho" ? "#c53030" : aluno.status === "amarelo" ? "#b7791f" : "#00509d";
+
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>
+                        <div class="info-aluno">
+                            <span class="iniciais-nome" style="background:${fundoIniciais};color:${corIniciais};">${iniciais}</span>
+                            <span class="nome-aluno">${aluno.nome}</span>
+                        </div>
+                    </td>
+                    <td><span class="ponto" style="background:${corStatus};width:10px;height:10px;"></span></td>
+                    <td>${aluno.turma}</td>
+                    <td><strong style="color:${aluno.media < 5 ? '#c53030' : aluno.media < 7 ? '#b7791f' : '#1a1c23'}">${aluno.media.toFixed(1)}</strong></td>
+                    <td>
+                        <button class="btn-icon" onclick="verAluno(${i})" title="Ver detalhes de ${aluno.nome}" aria-label="Ver detalhes de ${aluno.nome}">👁</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function verAluno(idx) {
+            const aluno = DADOS.alunos[idx];
+            mostrarToast(`Abrindo perfil: ${aluno.nome}`, "👤");
+        }
+
+        // ================================
+        // NOTIFICAÇÕES
+        // ================================
+        function renderizarNotificacoes() {
+            const lista = document.getElementById("listaNotificacoes");
+            lista.innerHTML = "";
+            DADOS.notificacoes.forEach(n => {
+                const div = document.createElement("div");
+                div.className = "notif-item";
+                div.innerHTML = `
+                    <div class="notif-icone" style="background:${n.fundo};">${n.icone}</div>
+                    <div class="notif-texto">
+                        <p>${n.texto}</p>
+                        <small>${n.tempo}</small>
+                    </div>
+                `;
+                lista.appendChild(div);
+            });
+
+            // Atualiza badge
+            const badge = document.getElementById("badgeNotificacao");
+            badge.style.display = DADOS.notificacoes.length > 0 ? "block" : "none";
+        }
+
+        // ================================
+        // LOGOUT
+        // ================================
+        function logout(e) {
+            if (e) e.preventDefault();
+            localStorage.clear();
+            mostrarToast("Sessão encerrada. Até logo! 👋", "↪");
+            setTimeout(() => { window.location.href = "index.html"; }, 1200);
+        }
+
+        // ================================
+        // EVENTOS
+        // ================================
+        function inicializarEventos() {
+            // Hamburguer
+            const btnMenu = document.getElementById("btnMenu");
+            const menuNav = document.getElementById("menuNavegacao");
+            const rodapeNav = document.getElementById("rodapeNavegacao");
+            btnMenu.addEventListener("click", () => {
+                btnMenu.classList.toggle("active");
+                menuNav.classList.toggle("open");
+                rodapeNav.classList.toggle("open");
+            });
+
+            // FAB
+            const fabBtn = document.getElementById("fabBtn");
+            const fabMenu = document.getElementById("fabMenu");
+            fabBtn.addEventListener("click", () => {
+                const aberto = fabMenu.classList.toggle("aberto");
+                fabBtn.classList.toggle("rotacionado", aberto);
+            });
+
+            // Fechar FAB ao clicar fora
+            document.addEventListener("click", (e) => {
+                if (!fabBtn.contains(e.target) && !fabMenu.contains(e.target)) {
+                    fabMenu.classList.remove("aberto");
+                    fabBtn.classList.remove("rotacionado");
+                }
+            });
+
+            // Notificações
+            const btnNotif = document.getElementById("btnNotificacao");
+            const painelNotif = document.getElementById("painelNotif");
+            const overlayNotif = document.getElementById("overlayNotif");
+            const fecharNotif = document.getElementById("fecharNotif");
+
+            function abrirNotif() {
+                painelNotif.classList.add("aberto");
+                overlayNotif.classList.add("ativo");
+            }
+            function fecharPainelNotif() {
+                painelNotif.classList.remove("aberto");
+                overlayNotif.classList.remove("ativo");
+            }
+
+            btnNotif.addEventListener("click", abrirNotif);
+            fecharNotif.addEventListener("click", fecharPainelNotif);
+            overlayNotif.addEventListener("click", fecharPainelNotif);
+
+            // Ajuda
+            document.getElementById("btnAjuda").addEventListener("click", () => {
+                mostrarToast("Central de ajuda em breve!", "📖");
+            });
+        }
+
+        // ================================
+        // INICIALIZAÇÃO
+        // ================================
+        document.addEventListener("DOMContentLoaded", () => {
+            configurarUsuario();
+            carregarMetricas();
+            renderizarGraficoBarras();
+            renderizarGraficoCircular();
+            renderizarTabela();
+            renderizarNotificacoes();
+            inicializarEventos();
+        });
+    </script>
+
+</body>
+
+</html>
