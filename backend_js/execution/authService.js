@@ -83,4 +83,29 @@ async function registrarUsuario(nome, email, senha) {
   }
 }
 
-module.exports = { verificarLogin, registrarUsuario };
+/**
+ * Redefine a senha de um usuário existente diretamente pelo e-mail.
+ */
+async function redefinirSenhaDireto(email, novaSenha) {
+  try {
+    const [existente] = await pool.query('SELECT id FROM usuarios WHERE email = ?', [email]);
+    if (existente.length === 0) {
+      return { sucesso: false, codigoHttp: 404, mensagem: 'E-mail não encontrado no sistema.' };
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const senhaHash = await bcrypt.hash(novaSenha, salt);
+
+    await pool.query(
+      'UPDATE usuarios SET senha_hash = ? WHERE email = ?',
+      [senhaHash, email]
+    );
+
+    return { sucesso: true, codigoHttp: 200, mensagem: 'Senha redefinida com sucesso!' };
+  } catch (erro) {
+    console.error('[authService] ❌ Erro ao redefinir senha:', erro.message);
+    return { sucesso: false, codigoHttp: 500, mensagem: 'Erro interno ao redefinir senha.' };
+  }
+}
+
+module.exports = { verificarLogin, registrarUsuario, redefinirSenhaDireto };

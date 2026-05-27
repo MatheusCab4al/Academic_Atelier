@@ -1,0 +1,24 @@
+# Dependências
+node_modules/
+
+# Segredos e ambiente local (nunca enviar ao GitHub)
+.env
+.env.local
+.env.*.local
+*.pem
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs e cache
+*.log
+npm-debug.log*
+.cache/
+dist/
+build/
+
+# IDE (mantém apenas settings compartilháveis)
+.vscode/*
+!.vscode/settings.json

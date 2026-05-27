@@ -254,7 +254,10 @@
         async function carregarTurmas() {
             if (!professorId) return;
             try {
-                const response = await fetch(apiUrl(`/api/turmas/${professorId}`));
+                const token = localStorage.getItem('tokenUsuario');
+                const response = await fetch(apiUrl(`/api/turmas/${professorId}`), {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
                 if (response.ok) {
                     listaTurmas = await response.json();
                     renderizarTurmas();
@@ -273,9 +276,13 @@
             const metodo = idTurmaSendoEditada ? 'PUT' : 'POST';
 
             try {
+                const token = localStorage.getItem('tokenUsuario');
                 const response = await fetch(url, {
                     method: metodo,
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
                     body: JSON.stringify({ ...dados, professorId })
                 });
 
@@ -298,8 +305,10 @@
             }
 
             try {
+                const token = localStorage.getItem('tokenUsuario');
                 const response = await fetch(apiUrl(`/api/turmas/${id}`), {
-                    method: 'DELETE'
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
                 });
 
                 if (response.ok) {

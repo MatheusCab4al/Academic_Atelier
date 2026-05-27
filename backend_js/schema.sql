@@ -1,5 +1,5 @@
 -- schema.sql
--- Script para criação do banco de dados e tabela de usuários (professores)
+-- Script para criação do banco de dados consolidado
 
 -- 1. Cria o banco de dados se não existir
 CREATE DATABASE IF NOT EXISTS academic_atelier;
@@ -22,24 +22,32 @@ INSERT INTO usuarios (nome, email, senha_hash, perfil)
 VALUES ('Professor Teste', 'teste@teste.com', '$2a$10$X7vW.tYpA9vJ/pXQ/hU/U.6Z5M7.z0/u4M.wS0/z0/u4M.wS0/z0/', 'professor')
 ON DUPLICATE KEY UPDATE email = email;
 
--- 4. Cria a tabela de turmas
--- Cada turma pertence a um professor (usuarios.id)
+-- 4. Cria a tabela de turmas (Dados base da turma)
 CREATE TABLE IF NOT EXISTS turmas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     serie VARCHAR(50) NOT NULL,
     turno VARCHAR(20) DEFAULT 'Matutino',
     ano_letivo VARCHAR(10) DEFAULT '2024',
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 5. Cria a tabela de vínculo entre professores e turmas (Relação N:N)
+CREATE TABLE IF NOT EXISTS professor_turma (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    professor_id INT NOT NULL,
+    turma_id INT NOT NULL,
+    disciplina VARCHAR(100) DEFAULT 'Geral',
     ultimo_conteudo VARCHAR(255) DEFAULT '',
     proxima_aula VARCHAR(255) DEFAULT '',
     pendencias INT DEFAULT 0,
     status ENUM('verde', 'amarelo', 'vermelho') DEFAULT 'verde',
-    professor_id INT NOT NULL,
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (professor_id) REFERENCES usuarios(id) ON DELETE CASCADE
+    FOREIGN KEY (professor_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (turma_id) REFERENCES turmas(id) ON DELETE CASCADE
 );
 
--- 5. Cria a tabela de alunos
+-- 6. Cria a tabela de alunos
 -- Cada aluno pertence a uma turma específica
 CREATE TABLE IF NOT EXISTS alunos (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -53,7 +61,7 @@ CREATE TABLE IF NOT EXISTS alunos (
     FOREIGN KEY (turma_id) REFERENCES turmas(id) ON DELETE CASCADE
 );
 
--- 6. Cria a tabela de notas (histórico de avaliações)
+-- 7. Cria a tabela de notas (histórico de avaliações)
 CREATE TABLE IF NOT EXISTS notas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     aluno_id INT NOT NULL,
@@ -63,7 +71,7 @@ CREATE TABLE IF NOT EXISTS notas (
     FOREIGN KEY (aluno_id) REFERENCES alunos(id) ON DELETE CASCADE
 );
 
--- 7. Cria a tabela de aulas_chamada (histórico de presença)
+-- 8. Cria a tabela de aulas_chamada (histórico de presença)
 CREATE TABLE IF NOT EXISTS aulas_chamada (
     id INT AUTO_INCREMENT PRIMARY KEY,
     aluno_id INT NOT NULL,
@@ -73,7 +81,9 @@ CREATE TABLE IF NOT EXISTS aulas_chamada (
     FOREIGN KEY (aluno_id) REFERENCES alunos(id) ON DELETE CASCADE
 );
 
--- 8. Inserção de dados exemplo para testes
-INSERT INTO turmas (nome, serie, professor_id) VALUES ('9º Ano C', 'Fundamental II', 1) ON DUPLICATE KEY UPDATE nome = nome;
+-- 9. Inserção de dados exemplo para testes
+INSERT INTO turmas (nome, serie) VALUES ('9º Ano C', 'Fundamental II') ON DUPLICATE KEY UPDATE nome = nome;
+-- Usando INSERT IGNORE para evitar erro de duplicação caso rode várias vezes
+INSERT IGNORE INTO professor_turma (id, professor_id, turma_id, disciplina) VALUES (1, 1, 1, 'Matemática');
 INSERT INTO alunos (nome, email, turma_id, media_atual, status, frequencia) 
 VALUES ('Ana Maria Oliveira', 'ana@email.com', 1, 9.5, 'verde', 98) ON DUPLICATE KEY UPDATE nome = nome;

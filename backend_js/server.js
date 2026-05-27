@@ -6,7 +6,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 // Importa os serviços da camada de execução
-const { verificarLogin, registrarUsuario } = require('./execution/authService');
+const { verificarLogin, registrarUsuario, redefinirSenhaDireto } = require('./execution/authService');
 const { criarTurma, listarTurmasPorProfessor, atualizarTurma, deletarTurma } = require('./execution/turmaService');
 const { cadastrarAluno, listarAlunosPorTurma, atualizarAluno, deletarAluno } = require('./execution/alunoService');
 const { lancarNota, listarNotas, registrarPresenca, listarChamadas } = require('./execution/notasFaltasService');
@@ -71,6 +71,25 @@ app.post('/api/cadastro', async (req, res) => {
   return res.status(resultado.codigoHttp).json(
     resultado.sucesso
       ? { mensagem: resultado.mensagem, usuarioId: resultado.usuarioId }
+      : { erro: resultado.mensagem }
+  );
+});
+
+// ─── Rota de Redefinição de Senha (Direta) ───────────────────────────────────
+// PUT /api/redefinir-senha
+// Body esperado: { "email": "...", "novaSenha": "..." }
+app.put('/api/redefinir-senha', async (req, res) => {
+  const { email, novaSenha } = req.body;
+
+  if (!email || !novaSenha) {
+    return res.status(400).json({ erro: 'E-mail e nova senha são obrigatórios.' });
+  }
+
+  const resultado = await redefinirSenhaDireto(email, novaSenha);
+
+  return res.status(resultado.codigoHttp).json(
+    resultado.sucesso
+      ? { mensagem: resultado.mensagem }
       : { erro: resultado.mensagem }
   );
 });

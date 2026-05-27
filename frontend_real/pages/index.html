@@ -36,7 +36,7 @@
             <div class="grupo-input">
                 <div class="linha-label">
                     <label for="password">SENHA</label>
-                    <a href="#" class="esqueceu-senha">Esqueci minha senha</a>
+                    <a href="#" class="esqueceu-senha" id="btnEsqueciSenha">Esqueci minha senha</a>
                 </div>
                 <input type="password" id="password" placeholder="••••••••">
             </div>
@@ -49,6 +49,36 @@
                 <span class="icone-erro">!</span> Credenciais inválidas
             </div>
         </form>
+
+
+
+        <!-- MODAL: REDEFINIR SENHA -->
+        <div class="modal-overlay" id="modalEsqueciSenha">
+            <div class="modal-container" style="max-width: 400px; padding: 24px;">
+                <header class="modal-header">
+                    <div>
+                        <h2>Redefinir Senha</h2>
+                        <p style="font-size: 13px; color: #718096; margin-top: 4px;">Digite seu e-mail e a nova senha desejada.</p>
+                    </div>
+                    <button class="fechar-modal" id="btnFecharModalSenha" aria-label="Fechar">×</button>
+                </header>
+                <form id="formRedefinirSenha" class="modal-form" style="padding-top: 16px;">
+                    <div class="grupo-input">
+                        <label>SEU E-MAIL</label>
+                        <input type="email" id="resetEmail" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="grupo-input">
+                        <label>NOVA SENHA</label>
+                        <input type="password" id="resetNovaSenha" placeholder="••••••••" required minlength="6">
+                    </div>
+                    <div class="mensagem-erro" id="errorMsgReset" style="display: none; margin-bottom: 12px; justify-content: center;"></div>
+                    <footer class="modal-rodape" style="margin-top: 24px;">
+                        <button type="button" class="btn-cancelar" id="btnCancelarModalSenha">Cancelar</button>
+                        <button type="submit" class="btn-salvar-turma">Salvar Nova Senha</button>
+                    </footer>
+                </form>
+            </div>
+        </div>
 
         <script src="../js/api.js"></script>
         <script>
@@ -90,6 +120,58 @@
                     console.error('Erro no login:', error);
                     errorMsg.textContent = mensagemErroConexao();
                     errorMsg.style.display = 'flex';
+                }
+            });
+
+            // Lógica do Modal de Redefinição de Senha
+            const modalSenha = document.getElementById('modalEsqueciSenha');
+            const btnEsqueciSenha = document.getElementById('btnEsqueciSenha');
+            const btnFecharModalSenha = document.getElementById('btnFecharModalSenha');
+            const btnCancelarModalSenha = document.getElementById('btnCancelarModalSenha');
+            const formRedefinirSenha = document.getElementById('formRedefinirSenha');
+            const errorMsgReset = document.getElementById('errorMsgReset');
+
+            function abrirModalSenha(e) {
+                e.preventDefault();
+                modalSenha.classList.add('ativo');
+            }
+
+            function fecharModalSenha() {
+                modalSenha.classList.remove('ativo');
+                formRedefinirSenha.reset();
+                errorMsgReset.style.display = 'none';
+            }
+
+            btnEsqueciSenha.addEventListener('click', abrirModalSenha);
+            btnFecharModalSenha.addEventListener('click', fecharModalSenha);
+            btnCancelarModalSenha.addEventListener('click', fecharModalSenha);
+
+            formRedefinirSenha.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const email = document.getElementById('resetEmail').value;
+                const novaSenha = document.getElementById('resetNovaSenha').value;
+
+                errorMsgReset.style.display = 'none';
+
+                try {
+                    const response = await fetch(apiUrl('/api/redefinir-senha'), {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, novaSenha })
+                    });
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        alert('Senha redefinida com sucesso! Você já pode fazer login.');
+                        fecharModalSenha();
+                    } else {
+                        errorMsgReset.textContent = data.erro || 'Erro ao redefinir senha.';
+                        errorMsgReset.style.display = 'flex';
+                    }
+                } catch (error) {
+                    console.error('Erro na redefinição:', error);
+                    errorMsgReset.textContent = 'Erro ao conectar com o servidor.';
+                    errorMsgReset.style.display = 'flex';
                 }
             });
         </script>
